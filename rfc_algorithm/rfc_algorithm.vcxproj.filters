@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="md5">
+      <UniqueIdentifier>{12722176-c8c2-4999-afbf-c96e5f68ad43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sha1">
+      <UniqueIdentifier>{dc06b914-8487-4ff0-bef6-cf9dfed8eb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sha2">
+      <UniqueIdentifier>{b8846c33-f42c-41a9-bb00-7361b46940d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sha2\third_party">
+      <UniqueIdentifier>{47272244-1285-48e3-9084-2216c4eb4deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sha2\third_party\nss">
+      <UniqueIdentifier>{049b455f-2e6b-41dc-8b21-5411933d85a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base64">
+      <UniqueIdentifier>{fb87fad1-e257-4d9b-913e-1d2b7d20ed28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base64\third_party">
+      <UniqueIdentifier>{547eae9d-8537-46e9-9b36-cac3f4c2dd31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base64\third_party\modp_b64">
+      <UniqueIdentifier>{3e91fdd2-402e-477c-b767-23ddcfa6ef40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{c8df2fdd-78d1-4e62-961d-f47c91185385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{b079a4f0-4085-410e-9d06-b5dee5172b27}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="md5\md5.cpp">
+      <Filter>md5</Filter>
+    </ClCompile>
+    <ClCompile Include="sha1\sha1.cpp">
+      <Filter>sha1</Filter>
+    </ClCompile>
+    <ClCompile Include="sha2\sha2.cpp">
+      <Filter>sha2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\nss\sha512.cc">
+      <Filter>sha2\third_party\nss</Filter>
+    </ClCompile>
+    <ClCompile Include="base64\base64.cpp">
+      <Filter>base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\modp_b64\modp_b64.cc">
+      <Filter>base64\third_party\modp_b64</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_reader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_writer.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\string_escape.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\adler32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\compress.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\crc32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\deflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\gzio.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\infback.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inffast.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inftrees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\trees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\uncompr.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\zutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="md5\md5.h">
+      <Filter>md5</Filter>
+    </ClInclude>
+    <ClInclude Include="sha1\scoped_capi_types.h">
+      <Filter>sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="sha1\sha1.h">
+      <Filter>sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="sha2\sha2.h">
+      <Filter>sha2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party\nss\blapi.h">
+      <Filter>sha2\third_party\nss</Filter>
+    </ClInclude>
+    <ClInclude Include="base64\base64.h">
+      <Filter>base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party\modp_b64\modp_b64.h">
+      <Filter>base64\third_party\modp_b64</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json_reader.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json_writer.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\string_escape.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\deflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\mozzconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

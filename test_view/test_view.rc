@@ -1,0 +1,121 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// BINDATA
+//
+
+IDR_WINDOW_LEFT_SIDE    BINDATA                 "window_left_side.png"
+IDR_WINDOW_RIGHT_SIDE   BINDATA                 "window_right_side.png"
+IDR_WINDOW_TOP_CENTER   BINDATA                 "window_top_center.png"
+IDR_WINDOW_TOP_LEFT_CORNER BINDATA                 "window_top_left_corner.png"
+IDR_WINDOW_TOP_RIGHT_CORNER BINDATA                 "window_top_right_corner.png"
+IDR_FRAME               BINDATA                 "frame_default.png"
+IDR_FRAME_INACTIVE      BINDATA                 "frame_default_inactive.png"
+IDR_WINDOW_BOTTOM_CENTER BINDATA                 "window_bottom_center.png"
+IDR_WINDOW_BOTTOM_LEFT_CORNER BINDATA                 "window_bottom_left_corner.png"
+IDR_WINDOW_BOTTOM_RIGHT_CORNER BINDATA                 "window_bottom_right_corner.png"
+IDR_APP_TOP_LEFT        BINDATA                 "app_top_left.png"
+IDR_APP_TOP_RIGHT       BINDATA                 "app_top_right.png"
+IDR_APP_TOP_CENTER      BINDATA                 "app_top_center.png"
+IDR_CONTENT_RIGHT_SIDE  BINDATA                 "content_right_side.png"
+IDR_CONTENT_BOTTOM_CENTER BINDATA                 "content_bottom_center.png"
+IDR_CONTENT_BOTTOM_LEFT_CORNER BINDATA                 "content_bottom_left_corner.png"
+IDR_CONTENT_BOTTOM_RIGHT_CORNER BINDATA                 "content_bottom_right_corner.png"
+IDR_CONTENT_LEFT_SIDE   BINDATA                 "content_left_side.png"
+IDR_CLOSE_SA_P          BINDATA                 "close_sa_p.png"
+IDR_CLOSE               BINDATA                 "close.png"
+IDR_CLOSE_H             BINDATA                 "close_h.png"
+IDR_CLOSE_P             BINDATA                 "close_p.png"
+IDR_CLOSE_SA            BINDATA                 "close_sa.png"
+IDR_CLOSE_SA_H          BINDATA                 "close_sa_h.png"
+IDR_RESTORE             BINDATA                 "restore.png"
+IDR_RESTORE_H           BINDATA                 "restore_h.png"
+IDR_RESTORE_P           BINDATA                 "restore_p.png"
+IDR_MAXIMIZE            BINDATA                 "maximize.png"
+IDR_MAXIMIZE_H          BINDATA                 "maximize_h.png"
+IDR_MAXIMIZE_P          BINDATA                 "maximize_p.png"
+IDR_MINIMIZE            BINDATA                 "minimize.png"
+IDR_MINIMIZE_H          BINDATA                 "minimize_h.png"
+IDR_MINIMIZE_P          BINDATA                 "minimize_p.png"
+IDR_TEXTBUTTON_TOP_RIGHT_P BINDATA                 "textbutton_tr_p.png"
+IDR_TEXTBUTTON_BOTTOM_H BINDATA                 "textbutton_b_h.png"
+IDR_TEXTBUTTON_BOTTOM_P BINDATA                 "textbutton_b_p.png"
+IDR_TEXTBUTTON_BOTTOM_LEFT_H BINDATA                 "textbutton_bl_h.png"
+IDR_TEXTBUTTON_BOTTOM_LEFT_P BINDATA                 "textbutton_bl_p.png"
+IDR_TEXTBUTTON_BOTTOM_RIGHT_H BINDATA                 "textbutton_br_h.png"
+IDR_TEXTBUTTON_BOTTOM_RIGHT_P BINDATA                 "textbutton_br_p.png"
+IDR_TEXTBUTTON_CENTER_H BINDATA                 "textbutton_c_h.png"
+IDR_TEXTBUTTON_CENTER_P BINDATA                 "textbutton_c_p.png"
+IDR_TEXTBUTTON_LEFT_H   BINDATA                 "textbutton_l_h.png"
+IDR_TEXTBUTTON_LEFT_P   BINDATA                 "textbutton_l_p.png"
+IDR_TEXTBUTTON_RIGHT_H  BINDATA                 "textbutton_r_h.png"
+IDR_TEXTBUTTON_RIGHT_P  BINDATA                 "textbutton_r_p.png"
+IDR_TEXTBUTTON_TOP_H    BINDATA                 "textbutton_t_h.png"
+IDR_TEXTBUTTON_TOP_P    BINDATA                 "textbutton_t_p.png"
+IDR_TEXTBUTTON_TOP_LEFT_H BINDATA                 "textbutton_tl_h.png"
+IDR_TEXTBUTTON_TOP_LEFT_P BINDATA                 "textbutton_tl_p.png"
+IDR_TEXTBUTTON_TOP_RIGHT_H BINDATA                 "textbutton_tr_h.png"
+IDR_DEFAULT_FAVICON     BINDATA                 "default_favicon.png"
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3F19C1C0-7F28-4DF0-84CC-C69FFB55F359}</ProjectGuid>
+    <RootNamespace>view_framework</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.30028.132</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_RAND_S;WINVER=0x0501;_WIN32_WINNT=0x0501;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>../lib/lib_view_framework-vc80-mt-sd.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_RAND_S;WINVER=0x0501;_WIN32_WINNT=0x0501;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>../lib/lib_view_framework-vc80-mt-s.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="accessibility\accessibility_types.h" />
+    <ClInclude Include="accessibility\view_accessibility.h" />
+    <ClInclude Include="accessibility\view_accessibility_wrapper.h" />
+    <ClInclude Include="animation\bounds_animator.h" />
+    <ClInclude Include="app\accelerator.h" />
+    <ClInclude Include="app\dwmapi_wrapper.h" />
+    <ClInclude Include="app\event.h" />
+    <ClInclude Include="app\keyboard_codes_win.h" />
+    <ClInclude Include="app\keyboard_code_conversion_win.h" />
+    <ClInclude Include="app\resource_bundle.h" />
+    <ClInclude Include="app\screen.h" />
+    <ClInclude Include="app\system_monitor.h" />
+    <ClInclude Include="app\windows_util.h" />
+    <ClInclude Include="clipboard\clipboard_util_win.h" />
+    <ClInclude Include="controls\button\button.h" />
+    <ClInclude Include="controls\button\custom_button.h" />
+    <ClInclude Include="controls\button\image_button.h" />
+    <ClInclude Include="controls\button\native_button.h" />
+    <ClInclude Include="controls\button\native_button_win.h" />
+    <ClInclude Include="controls\button\native_button_wrapper.h" />
+    <ClInclude Include="controls\button\text_button.h" />
+    <ClInclude Include="controls\native_control_win.h" />
+    <ClInclude Include="controls\native_view_host.h" />
+    <ClInclude Include="controls\native_view_host_win.h" />
+    <ClInclude Include="controls\native_view_host_wrapper.h" />
+    <ClInclude Include="controls\single_split_view.h" />
+    <ClInclude Include="dragdrop\drag_drop_types.h" />
+    <ClInclude Include="dragdrop\drag_source.h" />
+    <ClInclude Include="dragdrop\drop_helper.h" />
+    <ClInclude Include="dragdrop\drop_target.h" />
+    <ClInclude Include="dragdrop\drop_target_win.h" />
+    <ClInclude Include="dragdrop\os_exchange_data.h" />
+    <ClInclude Include="dragdrop\os_exchange_data_provider_win.h" />
+    <ClInclude Include="focus\accelerator_handler.h" />
+    <ClInclude Include="focus\focus_manager.h" />
+    <ClInclude Include="focus\focus_search.h" />
+    <ClInclude Include="focus\focus_util_win.h" />
+    <ClInclude Include="focus\view_storage.h" />
+    <ClInclude Include="gfx\background.h" />
+    <ClInclude Include="gfx\border.h" />
+    <ClInclude Include="gfx\default_theme_provider.h" />
+    <ClInclude Include="gfx\painter.h" />
+    <ClInclude Include="gfx\theme_provider.h" />
+    <ClInclude Include="layout\box_layout.h" />
+    <ClInclude Include="layout\fill_layout.h" />
+    <ClInclude Include="layout\grid_layout.h" />
+    <ClInclude Include="layout\layout_manager.h" />
+    <ClInclude Include="layout\standard_layout.h" />
+    <ClInclude Include="view.h" />
+    <ClInclude Include="view_delegate.h" />
+    <ClInclude Include="widget\aero_tooltip_manager.h" />
+    <ClInclude Include="widget\message_crack.h" />
+    <ClInclude Include="widget\root_view.h" />
+    <ClInclude Include="widget\tooltip_manager.h" />
+    <ClInclude Include="widget\tooltip_manager_win.h" />
+    <ClInclude Include="widget\widget.h" />
+    <ClInclude Include="widget\widget_delegate.h" />
+    <ClInclude Include="widget\widget_win.h" />
+    <ClInclude Include="window\client_view.h" />
+    <ClInclude Include="window\custom_frame_view.h" />
+    <ClInclude Include="window\dialog_client_view.h" />
+    <ClInclude Include="window\dialog_delegate.h" />
+    <ClInclude Include="window\message_box_flags.h" />
+    <ClInclude Include="window\native_frame_view.h" />
+    <ClInclude Include="window\non_client_view.h" />
+    <ClInclude Include="window\window.h" />
+    <ClInclude Include="window\window_delegate.h" />
+    <ClInclude Include="window\window_win.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="accessibility\view_accessibility.cpp" />
+    <ClCompile Include="accessibility\view_accessibility_wrapper.cpp" />
+    <ClCompile Include="animation\bounds_animator.cpp" />
+    <ClCompile Include="app\dwmapi_wrapper.cpp" />
+    <ClCompile Include="app\event.cpp" />
+    <ClCompile Include="app\keyboard_code_conversion_win.cpp" />
+    <ClCompile Include="app\resource_bundle.cpp" />
+    <ClCompile Include="app\screen.cpp" />
+    <ClCompile Include="app\system_monitor.cpp" />
+    <ClCompile Include="app\windows_util.cpp" />
+    <ClCompile Include="clipboard\clipboard_util_win.cpp" />
+    <ClCompile Include="controls\button\button.cpp" />
+    <ClCompile Include="controls\button\custom_button.cpp" />
+    <ClCompile Include="controls\button\image_button.cpp" />
+    <ClCompile Include="controls\button\native_button.cpp" />
+    <ClCompile Include="controls\button\native_button_win.cpp" />
+    <ClCompile Include="controls\button\text_button.cpp" />
+    <ClCompile Include="controls\native_control_win.cpp" />
+    <ClCompile Include="controls\native_view_host.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="controls\native_view_host_win.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="controls\single_split_view.cpp" />
+    <ClCompile Include="dragdrop\drag_drop_types.cpp" />
+    <ClCompile Include="dragdrop\drag_source.cpp" />
+    <ClCompile Include="dragdrop\drop_helper.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="dragdrop\drop_target.cpp" />
+    <ClCompile Include="dragdrop\drop_target_win.cpp" />
+    <ClCompile Include="dragdrop\os_exchange_data.cpp" />
+    <ClCompile Include="dragdrop\os_exchange_data_provider_win.cpp" />
+    <ClCompile Include="focus\accelerator_handler.cpp" />
+    <ClCompile Include="focus\focus_manager.cpp" />
+    <ClCompile Include="focus\focus_search.cpp" />
+    <ClCompile Include="focus\focus_util_win.cpp" />
+    <ClCompile Include="focus\view_storage.cpp" />
+    <ClCompile Include="gfx\background.cpp" />
+    <ClCompile Include="gfx\border.cpp" />
+    <ClCompile Include="gfx\default_theme_provider.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="gfx\painter.cpp" />
+    <ClCompile Include="gfx\theme_provider.cpp" />
+    <ClCompile Include="layout\box_layout.cpp" />
+    <ClCompile Include="layout\fill_layout.cpp" />
+    <ClCompile Include="layout\grid_layout.cpp" />
+    <ClCompile Include="layout\layout_manager.cpp" />
+    <ClCompile Include="view.cpp" />
+    <ClCompile Include="widget\aero_tooltip_manager.cpp" />
+    <ClCompile Include="widget\root_view.cpp" />
+    <ClCompile Include="widget\tooltip_manager.cpp" />
+    <ClCompile Include="widget\tooltip_manager_win.cpp" />
+    <ClCompile Include="widget\widget_win.cpp" />
+    <ClCompile Include="window\client_view.cpp" />
+    <ClCompile Include="window\custom_frame_view.cpp" />
+    <ClCompile Include="window\dialog_client_view.cpp" />
+    <ClCompile Include="window\dialog_delegate.cpp" />
+    <ClCompile Include="window\native_frame_view.cpp" />
+    <ClCompile Include="window\non_client_view.cpp" />
+    <ClCompile Include="window\window.cpp" />
+    <ClCompile Include="window\window_delegate.cpp" />
+    <ClCompile Include="window\window_win.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

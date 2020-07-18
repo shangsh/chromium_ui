@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{819d355e-ac10-48e5-9e9d-c8537b910260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\icu">
+      <UniqueIdentifier>{79da0aac-d5ea-4ce3-bf74-8fe40127b1a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\nspr">
+      <UniqueIdentifier>{e6a2295c-644e-4821-8229-450426eb63df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\third_party\icu\icu_utf.cc">
+      <Filter>third_party\icu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\nspr\prtime.cc">
+      <Filter>third_party\nspr</Filter>
+    </ClCompile>
+    <ClCompile Include="at_exit.cpp" />
+    <ClCompile Include="base_switches.cpp" />
+    <ClCompile Include="command_line.cpp" />
+    <ClCompile Include="cpu.cpp" />
+    <ClCompile Include="data_pack.cpp" />
+    <ClCompile Include="debug_util.cpp" />
+    <ClCompile Include="environment.cpp" />
+    <ClCompile Include="file_path.cpp" />
+    <ClCompile Include="file_util.cpp" />
+    <ClCompile Include="file_version_info.cpp" />
+    <ClCompile Include="lazy_instance.cpp" />
+    <ClCompile Include="lock.cpp" />
+    <ClCompile Include="lock_impl.cpp" />
+    <ClCompile Include="logging.cpp" />
+    <ClCompile Include="native_library.cpp" />
+    <ClCompile Include="non_thread_safe.cpp" />
+    <ClCompile Include="path_service.cpp" />
+    <ClCompile Include="pickle.cpp" />
+    <ClCompile Include="platform_file.cpp" />
+    <ClCompile Include="rand_util.cpp" />
+    <ClCompile Include="ref_counted.cpp" />
+    <ClCompile Include="ref_counted_memory.cpp" />
+    <ClCompile Include="registry.cpp" />
+    <ClCompile Include="resource_util.cpp" />
+    <ClCompile Include="rtl.cpp" />
+    <ClCompile Include="scoped_variant.cpp" />
+    <ClCompile Include="string_number_conversions.cpp" />
+    <ClCompile Include="string_piece.cpp" />
+    <ClCompile Include="string_split.cpp" />
+    <ClCompile Include="string_util.cpp" />
+    <ClCompile Include="stringprintf.cpp" />
+    <ClCompile Include="sys_info.cpp" />
+    <ClCompile Include="sys_string_conversions.cpp" />
+    <ClCompile Include="thread_checker.cpp" />
+    <ClCompile Include="thread_local.cpp" />
+    <ClCompile Include="thread_local_storage.cpp" />
+    <ClCompile Include="time.cpp" />
+    <ClCompile Include="utf_string_conversion_utils.cpp" />
+    <ClCompile Include="utf_string_conversions.cpp" />
+    <ClCompile Include="values.cpp" />
+    <ClCompile Include="version.cpp" />
+    <ClCompile Include="vlog.cpp" />
+    <ClCompile Include="waitable_event.cpp" />
+    <ClCompile Include="weak_ptr.cpp" />
+    <ClCompile Include="win_util.cpp" />
+    <ClCompile Include="windows_version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third_party\icu\icu_utf.h">
+      <Filter>third_party\icu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party\nspr\prtime.h">
+      <Filter>third_party\nspr</Filter>
+    </ClInclude>
+    <ClInclude Include="at_exit.h" />
+    <ClInclude Include="atomic_ref_count.h" />
+    <ClInclude Include="atomicops.h" />
+    <ClInclude Include="auto_reset.h" />
+    <ClInclude Include="base_switches.h" />
+    <ClInclude Include="basic_types.h" />
+    <ClInclude Include="bit_util.h" />
+    <ClInclude Include="build_config.h" />
+    <ClInclude Include="command_line.h" />
+    <ClInclude Include="cpu.h" />
+    <ClInclude Include="data_pack.h" />
+    <ClInclude Include="debug_util.h" />
+    <ClInclude Include="environment.h" />
+    <ClInclude Include="file_path.h" />
+    <ClInclude Include="file_util.h" />
+    <ClInclude Include="file_version_info.h" />
+    <ClInclude Include="float_util.h" />
+    <ClInclude Include="lazy_instance.h" />
+    <ClInclude Include="lock.h" />
+    <ClInclude Include="lock_impl.h" />
+    <ClInclude Include="logging.h" />
+    <ClInclude Include="native_library.h" />
+    <ClInclude Include="non_thread_safe.h" />
+    <ClInclude Include="path_service.h" />
+    <ClInclude Include="pickle.h" />
+    <ClInclude Include="platform_file.h" />
+    <ClInclude Include="port.h" />
+    <ClInclude Include="rand_util.h" />
+    <ClInclude Include="ref_counted.h" />
+    <ClInclude Include="ref_counted_memory.h" />
+    <ClInclude Include="registry.h" />
+    <ClInclude Include="resource_util.h" />
+    <ClInclude Include="rtl.h" />
+    <ClInclude Include="scoped_comptr.h" />
+    <ClInclude Include="scoped_handle.h" />
+    <ClInclude Include="scoped_native_library.h" />
+    <ClInclude Include="scoped_ptr.h" />
+    <ClInclude Include="scoped_variant.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="stack_container.h" />
+    <ClInclude Include="stl_utilinl.h" />
+    <ClInclude Include="string16.h" />
+    <ClInclude Include="string_number_conversions.h" />
+    <ClInclude Include="string_piece.h" />
+    <ClInclude Include="string_split.h" />
+    <ClInclude Include="string_util.h" />
+    <ClInclude Include="stringprintf.h" />
+    <ClInclude Include="sys_info.h" />
+    <ClInclude Include="sys_string_conversions.h" />
+    <ClInclude Include="thread_checker.h" />
+    <ClInclude Include="thread_local.h" />
+    <ClInclude Include="thread_local_storage.h" />
+    <ClInclude Include="time.h" />
+    <ClInclude Include="tuple.h" />
+    <ClInclude Include="utf_string_conversion_utils.h" />
+    <ClInclude Include="utf_string_conversions.h" />
+    <ClInclude Include="values.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="vlog.h" />
+    <ClInclude Include="waitable_event.h" />
+    <ClInclude Include="weak_ptr.h" />
+    <ClInclude Include="win_util.h" />
+    <ClInclude Include="windows_version.h" />
+  </ItemGroup>
+</Project>

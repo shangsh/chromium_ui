@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F19EF4AA-5DD6-4E44-9B8E-2455568AE16E}</ProjectGuid>
+    <RootNamespace>test_view</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.30028.132</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;WINVER=0x0501;_WIN32_WINNT=0x0501;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>lib_base-vc80-mt-sd.lib;lib_rfc_algorithm-vc80-mt-sd.lib;lib_message_framework-vc80-mt-sd.lib;lib_gfx-vc80-mt-sd.lib;lib_animation-vc80-mt-sd.lib;lib_view_framework-vc80-mt-sd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>../lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;WINVER=0x0501;_WIN32_WINNT=0x0501;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>lib_base-vc80-mt-s.lib;lib_rfc_algorithm-vc80-mt-s.lib;lib_message_framework-vc80-mt-s.lib;lib_gfx-vc80-mt-s.lib;lib_animation-vc80-mt-s.lib;lib_view_framework-vc80-mt-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>../lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Image Include="app_top_center.png" />
+    <Image Include="app_top_left.png" />
+    <Image Include="app_top_right.png" />
+    <Image Include="close.png" />
+    <Image Include="close_h.png" />
+    <Image Include="close_p.png" />
+    <Image Include="close_sa.png" />
+    <Image Include="close_sa_h.png" />
+    <Image Include="close_sa_p.png" />
+    <Image Include="content_bottom_center.png" />
+    <Image Include="content_bottom_left_corner.png" />
+    <Image Include="content_bottom_right_corner.png" />
+    <Image Include="content_left_side.png" />
+    <Image Include="content_right_side.png" />
+    <Image Include="default_favicon.png" />
+    <Image Include="frame_default.png" />
+    <Image Include="frame_default_inactive.png" />
+    <Image Include="maximize.png" />
+    <Image Include="maximize_h.png" />
+    <Image Include="maximize_p.png" />
+    <Image Include="minimize.png" />
+    <Image Include="minimize_h.png" />
+    <Image Include="minimize_p.png" />
+    <Image Include="restore.png" />
+    <Image Include="restore_h.png" />
+    <Image Include="restore_p.png" />
+    <Image Include="textbutton_bl_h.png" />
+    <Image Include="textbutton_bl_p.png" />
+    <Image Include="textbutton_br_h.png" />
+    <Image Include="textbutton_br_p.png" />
+    <Image Include="textbutton_b_h.png" />
+    <Image Include="textbutton_b_p.png" />
+    <Image Include="textbutton_c_h.png" />
+    <Image Include="textbutton_c_p.png" />
+    <Image Include="textbutton_l_h.png" />
+    <Image Include="textbutton_l_p.png" />
+    <Image Include="textbutton_r_h.png" />
+    <Image Include="textbutton_r_p.png" />
+    <Image Include="textbutton_tl_h.png" />
+    <Image Include="textbutton_tl_p.png" />
+    <Image Include="textbutton_tr_h.png" />
+    <Image Include="textbutton_tr_p.png" />
+    <Image Include="textbutton_t_h.png" />
+    <Image Include="textbutton_t_p.png" />
+    <Image Include="window_bottom_center.png" />
+    <Image Include="window_bottom_left_corner.png" />
+    <Image Include="window_bottom_right_corner.png" />
+    <Image Include="window_left_side.png" />
+    <Image Include="window_right_side.png" />
+    <Image Include="window_top_center.png" />
+    <Image Include="window_top_left_corner.png" />
+    <Image Include="window_top_right_corner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="test_view.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
