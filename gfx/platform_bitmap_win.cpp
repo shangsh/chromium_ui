@@ -1,49 +1,83 @@
-
-#include "platform_bitmap_win.h"
-
-#include <algorithm>
-using std::min;
-using std::max;
-
-#include <windows.h>
-#include <gdiplus.h>
-
-#include "base/logging.h"
+#include "gfx/platform_bitmap_win.h"
 
 namespace gfx
 {
 
-    PlatformBitmapWin::PlatformBitmapWin(Gdiplus::Bitmap* native_bitmap)
-        : bitmap_ref_(new BitmapRef(native_bitmap)) {}
+PlatformBitmapWin::PlatformBitmapWin()
+    : bitmap_(nullptr)
+{
+}
 
-    Gdiplus::Bitmap* PlatformBitmapWin::GetNativeBitmap() const
+PlatformBitmapWin::PlatformBitmapWin(int width, int height, bool is_opaque)
+    : bitmap_(nullptr)
+{
+    Gdiplus::PixelFormat format = is_opaque ? PixelFormat32bppARGB : PixelFormat32bppPARGB;
+    bitmap_ = new Gdiplus::Bitmap(width, height, format);
+}
+
+PlatformBitmapWin::PlatformBitmapWin(Gdiplus::Bitmap* native_bitmap)
+    : bitmap_(native_bitmap)
+{
+}
+
+PlatformBitmapWin::~PlatformBitmapWin()
+{
+    delete bitmap_;
+}
+
+int PlatformBitmapWin::Width() const
+{
+    if (bitmap_)
     {
-        return bitmap_ref_->bitmap();
+        return bitmap_->GetWidth();
     }
+    return 0;
+}
 
-    int PlatformBitmapWin::Width() const
+int PlatformBitmapWin::Height() const
+{
+    if (bitmap_)
     {
-        return bitmap_ref_->bitmap()->GetWidth();
+        return bitmap_->GetHeight();
     }
+    return 0;
+}
 
-    int PlatformBitmapWin::Height() const
+bool PlatformBitmapWin::IsOpaque() const
+{
+    if (bitmap_)
     {
-        return bitmap_ref_->bitmap()->GetHeight();
+        Gdiplus::PixelFormat format = bitmap_->GetPixelFormat();
+        return (format == PixelFormat32bppRGB || format == PixelFormat24bppRGB);
     }
+    return true;
+}
 
+void* PlatformBitmapWin::GetBitmapData() const
+{
+    // Would need to lock bitmap bits
+    return nullptr;
+}
 
-    PlatformBitmapWin::BitmapRef::BitmapRef(Gdiplus::Bitmap* native_bitmap)
-        : bitmap_(native_bitmap)
+bool PlatformBitmapWin::LoadFromFile(const std::wstring& file_path)
+{
+    if (bitmap_)
     {
-        DLOG_ASSERT(native_bitmap);
+        delete bitmap_;
     }
+    bitmap_ = Gdiplus::Bitmap::FromFile(file_path.c_str());
+    return bitmap_ && bitmap_->GetLastStatus() == Gdiplus::Ok;
+}
 
-
-    // static
-    PlatformBitmap* PlatformBitmap::CreateFromNativeBitmap(
-        Gdiplus::Bitmap* native_bitmap)
+bool PlatformBitmapWin::SaveToFile(const std::wstring& file_path) const
+{
+    if (bitmap_)
     {
-        return new PlatformBitmapWin(native_bitmap);
+        CLSID pngClsid;
+        // Get PNG encoder CLSID
+        return false;
     }
+    return false;
+}
 
-} //namespace gfx
+} // namespace gfx

@@ -1,48 +1,36 @@
-
-#ifndef __platform_bitmap_win_h__
-#define __platform_bitmap_win_h__
+#ifndef GFX_PLATFORM_BITMAP_WIN_H_
+#define GFX_PLATFORM_BITMAP_WIN_H_
 
 #pragma once
 
-#include "base/scoped_ptr.h"
-
-#include "platform_bitmap.h"
+#include "gfx/platform_bitmap.h"
+#include <windows.h>
+#include <gdiplus.h>
 
 namespace gfx
 {
 
-    class PlatformBitmapWin : public PlatformBitmap
-    {
-    public:
-        explicit PlatformBitmapWin(Gdiplus::Bitmap* native_bitmap);
+class PlatformBitmapWin : public PlatformBitmap
+{
+public:
+    PlatformBitmapWin();
+    PlatformBitmapWin(int width, int height, bool is_opaque);
+    PlatformBitmapWin(Gdiplus::Bitmap* native_bitmap);
+    virtual ~PlatformBitmapWin();
 
-        virtual Gdiplus::Bitmap* GetNativeBitmap() const;
+    int Width() const override;
+    int Height() const override;
+    bool IsOpaque() const override;
+    void* GetBitmapData() const override;
+    bool LoadFromFile(const std::wstring& file_path) override;
+    bool SaveToFile(const std::wstring& file_path) const override;
 
-        virtual int Width() const;
+    Gdiplus::Bitmap* GetNativeBitmap() override { return bitmap_; }
 
-        virtual int Height() const;
+private:
+    Gdiplus::Bitmap* bitmap_;
+};
 
-    private:
-        virtual ~PlatformBitmapWin() {}
+} // namespace gfx
 
-        class BitmapRef : public base::RefCounted<BitmapRef>
-        {
-        public:
-            BitmapRef(Gdiplus::Bitmap* native_bitmap);
-
-            Gdiplus::Bitmap* bitmap() const { return bitmap_.get(); }
-
-        private:
-            friend class base::RefCounted<BitmapRef>;
-
-            const scoped_ptr<Gdiplus::Bitmap> bitmap_;
-
-            DISALLOW_COPY_AND_ASSIGN(BitmapRef);
-        };
-
-        scoped_refptr<BitmapRef> bitmap_ref_;
-    };
-
-} //namespace gfx
-
-#endif //__platform_bitmap_win_h__
+#endif // GFX_PLATFORM_BITMAP_WIN_H_

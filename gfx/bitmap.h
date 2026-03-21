@@ -1,64 +1,65 @@
-
-#ifndef __bitmap_h__
-#define __bitmap_h__
+#ifndef GFX_BITMAP_H_
+#define GFX_BITMAP_H_
 
 #pragma once
 
 #include "base/ref_counted.h"
-
 #include "color.h"
+#include <string>
 
+#if defined(PLATFORM_WINDOWS)
 namespace Gdiplus
 {
     class Bitmap;
 }
+#endif
 
 namespace gfx
 {
 
-    class PlatformBitmap;
+class PlatformBitmap;
 
-    class Bitmap
-    {
-    public:
-        // 创建缺省位图.
-        Bitmap();
+class Bitmap
+{
+public:
+    Bitmap();
+    Bitmap(const Bitmap& other);
+    Bitmap& operator=(const Bitmap& other);
 
-        // 克隆位图对象.
-        Bitmap(const Bitmap& other);
-        Bitmap& operator=(const Bitmap& other);
+#if defined(PLATFORM_WINDOWS)
+    explicit Bitmap(Gdiplus::Bitmap* native_bitmap);
+#endif
 
-        // 从本地位图创建Bitmap对象.
-        explicit Bitmap(Gdiplus::Bitmap* native_bitmap);
+    explicit Bitmap(PlatformBitmap* platform_bitmap);
+    ~Bitmap();
 
-        // 用PlatformBitmap对象构建Bitmap. Bitmap对象接管PlatformBitmap对象的所有权.
-        explicit Bitmap(PlatformBitmap* platform_bitmap);
+#if defined(PLATFORM_WINDOWS)
+    Gdiplus::Bitmap* GetNativeBitmap() const;
+#endif
 
-        ~Bitmap();
+    PlatformBitmap* platform_bitmap() const { return platform_bitmap_.get(); }
 
-        // 返回本地位图对象.
-        Gdiplus::Bitmap* GetNativeBitmap() const;
+    bool IsNull() const;
+    int Width() const;
+    int Height() const;
+    Color GetPixel(int x, int y) const;
 
-        // 获取底层平台实现. 可以根据需要强转到具体实现类型.
-        PlatformBitmap* platform_bitmap() const { return platform_bitmap_.get(); }
+    // Platform-independent methods
+    int GetWidth() const;
+    int GetHeight() const;
+    bool IsOpaque() const;
+    void* GetBitmapData() const;
+    bool LoadFromFile(const std::wstring& file_path);
+    bool SaveToFile(const std::wstring& file_path) const;
 
-        // 本地位图对象是否为空.
-        bool IsNull() const;
+    // Factory methods
+    static Bitmap* CreateBitmap();
+    static Bitmap* CreateBitmap(int width, int height, bool is_opaque);
 
-        // 获取位图的宽度.
-        int Width() const;
-
-        // 获取位图的高度.
-        int Height() const;
-
-        // 获取指定位置像素颜色值.
-        Color GetPixel(int x, int y) const;
-
-    private:
-        // 平台位图封装实现.
-        scoped_refptr<PlatformBitmap> platform_bitmap_;
-    };
+private:
+    scoped_refptr<PlatformBitmap> platform_bitmap_;
+};
 
 } //namespace gfx
 
-#endif //__bitmap_h__
+#endif //GFX_BITMAP_H_

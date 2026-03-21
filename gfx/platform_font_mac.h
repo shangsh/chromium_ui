@@ -1,21 +1,21 @@
-#ifndef GFX_PLATFORM_FONT_WIN_H_
-#define GFX_PLATFORM_FONT_WIN_H_
+#ifndef GFX_PLATFORM_FONT_MAC_H_
+#define GFX_PLATFORM_FONT_MAC_H_
 
 #pragma once
 
 #include "gfx/platform_font.h"
-#include <windows.h>
+#include <CoreText/CoreText.h>
+#include <AppKit/AppKit.h>
 
 namespace gfx
 {
 
-class PlatformFontWin : public PlatformFont
+class PlatformFontMac : public PlatformFont
 {
 public:
-    PlatformFontWin();
-    PlatformFontWin(const std::wstring& font_name, int font_size);
-    PlatformFontWin(HFONT native_font);
-    virtual ~PlatformFontWin();
+    PlatformFontMac();
+    PlatformFontMac(const std::wstring& font_name, int font_size);
+    virtual ~PlatformFontMac();
 
     std::wstring GetFontName() const override { return font_name_; }
     int GetFontSize() const override { return font_size_; }
@@ -27,7 +27,9 @@ public:
     int GetStyle() const override { return style_; }
     Font DeriveFont(int size_delta, int style) const override;
 
-    HFONT GetNativeFont() const override { return font_; }
+    void* GetCTFont() const override { return ct_font_; }
+    void* GetNSFont() const override { return ns_font_; }
+
     void SetFont(const std::wstring& font_name, int size);
 
 private:
@@ -37,9 +39,10 @@ private:
     std::wstring font_name_;
     int font_size_;
     int style_;
-    HFONT font_;
+    CTFontRef ct_font_;
+    NSFont* ns_font_;
 };
 
 } // namespace gfx
 
-#endif // GFX_PLATFORM_FONT_WIN_H_
+#endif // GFX_PLATFORM_FONT_MAC_H_

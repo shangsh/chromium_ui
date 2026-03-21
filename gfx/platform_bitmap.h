@@ -1,44 +1,40 @@
-
-#ifndef __platform_bitmap_h__
-#define __platform_bitmap_h__
+#ifndef GFX_PLATFORM_BITMAP_H_
+#define GFX_PLATFORM_BITMAP_H_
 
 #pragma once
 
-#include "base/ref_counted.h"
-
-namespace Gdiplus
-{
-    class Bitmap;
-}
+#include "gfx/bitmap.h"
+#include "gfx/color.h"
+#include <string>
 
 namespace gfx
 {
 
-    class Bitmap;
+class PlatformBitmap : public base::RefCounted<PlatformBitmap>
+{
+public:
+    static PlatformBitmap* CreateDefault();
+    static PlatformBitmap* CreateFromSize(int width, int height, bool is_opaque);
 
-    class PlatformBitmap : public base::RefCounted<PlatformBitmap>
-    {
-    public:
-        // 创建平台相关的PlatformBitmap.
-        static PlatformBitmap* CreateFromNativeBitmap(
-            Gdiplus::Bitmap* native_bitmap);
+#if defined(PLATFORM_WINDOWS)
+    static PlatformBitmap* CreateFromNativeBitmap(Gdiplus::Bitmap* bitmap);
+#endif
 
-        // 返回本地位图对象.
-        virtual Gdiplus::Bitmap* GetNativeBitmap() const = 0;
+    virtual int Width() const = 0;
+    virtual int Height() const = 0;
+    virtual bool IsOpaque() const = 0;
+    virtual void* GetBitmapData() const = 0;
+    virtual bool LoadFromFile(const std::wstring& file_path) = 0;
+    virtual bool SaveToFile(const std::wstring& file_path) const = 0;
 
-        // 获取位图的宽度.
-        virtual int Width() const = 0;
+#if defined(PLATFORM_WINDOWS)
+    virtual Gdiplus::Bitmap* GetNativeBitmap() = 0;
+#endif
 
-        // 获取位图的高度.
-        virtual int Height() const = 0;
+protected:
+    virtual ~PlatformBitmap() {}
+};
 
-    protected:
-        virtual ~PlatformBitmap() {}
+} // namespace gfx
 
-    private:
-        friend class base::RefCounted<PlatformBitmap>;
-    };
-
-} //namespace gfx
-
-#endif //__platform_bitmap_h__
+#endif // GFX_PLATFORM_BITMAP_H_
