@@ -206,12 +206,12 @@ void CanvasWin::TileImageInt(const Bitmap& bitmap,
     // Tile image with source
 }
 
-HDC CanvasWin::BeginPlatformPaint()
+PlatformDC CanvasWin::BeginPlatformPaint()
 {
     return hdc_;
 }
 
-void CanvasWin::EndPlatformPaint(HDC dc)
+void CanvasWin::EndPlatformPaint(PlatformDC dc)
 {
     // No-op for memory DC
 }

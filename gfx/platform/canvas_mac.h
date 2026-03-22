@@ -76,7 +76,6 @@ public:
 
 private:
     CGContextRef context_;
-    CGBitmapContext bitmap_context_;
     int saved_state_count_;
 };
 

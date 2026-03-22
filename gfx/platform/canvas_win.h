@@ -62,8 +62,8 @@ public:
         int src_x, int src_y,
         int dest_x, int dest_y, int w, int h) override;
 
-    HDC BeginPlatformPaint() override;
-    void EndPlatformPaint(HDC dc) override;
+    PlatformDC BeginPlatformPaint() override;
+    void EndPlatformPaint(PlatformDC dc) override;
 
     CanvasGdiplus* AsCanvasGdiplus() override;
     const CanvasGdiplus* AsCanvasGdiplus() const override;
