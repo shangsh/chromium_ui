@@ -7,7 +7,9 @@
 #include <string>
 
 #if defined(PLATFORM_WINDOWS)
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #elif defined(PLATFORM_MACOS)
 #include <CoreGraphics/CoreGraphics.h>
 #endif

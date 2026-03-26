@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // 可选的弹出消息方案
 // ------------------

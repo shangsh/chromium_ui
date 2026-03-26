@@ -40,16 +40,15 @@ set(BASE_SOURCES
     base/ref_counted.cpp
 )
 
-# Include directories
-include_directories(
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/base
-    ${CMAKE_SOURCE_DIR}/gfx
-)
-
 # Create static library (works on all platforms)
 add_library(chromium_ui STATIC
     ${BASE_SOURCES}
+)
+
+target_include_directories(chromium_ui PUBLIC
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/base
+    ${CMAKE_SOURCE_DIR}/gfx
 )
 
 # Windows specific libraries

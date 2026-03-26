@@ -1,0 +1,2 @@
+/usr/bin/ar qc libaura_mac.a CMakeFiles/aura_mac.dir/view/view_mac.mm.o CMakeFiles/aura_mac.dir/controls/controls_mac.mm.o CMakeFiles/aura_mac.dir/controls/controls_extra_mac.mm.o
+/usr/bin/ranlib libaura_mac.a

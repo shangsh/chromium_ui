@@ -1,0 +1,2 @@
+/usr/bin/ar qc libchromium_ui_ui.a CMakeFiles/chromium_ui_ui.dir/Users/ssh/chromium_ui/view_framework/window/window_mac.mm.o CMakeFiles/chromium_ui_ui.dir/Users/ssh/chromium_ui/view_framework/widget/widget_mac.mm.o
+/usr/bin/ranlib libchromium_ui_ui.a

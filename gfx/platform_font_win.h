@@ -4,7 +4,9 @@
 #pragma once
 
 #include "gfx/platform_font.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 namespace gfx
 {

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // 线程局部存储封装, 除了提供API可移植性外不做任何其它事情.
 class ThreadLocalStorage

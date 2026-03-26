@@ -1,28 +1,33 @@
-
 #ifndef __point_h__
 #define __point_h__
 
 #pragma once
 
 #include <iosfwd>
+#include <cstdint>
 
+#ifdef _WIN32
 typedef unsigned long DWORD;
 typedef struct tagPOINT POINT;
+#else
+typedef uint32_t DWORD;
+#endif
 
 namespace gfx
 {
 
-    // (x, y)坐标点.
     class Point
     {
     public:
         Point();
         Point(int x, int y);
-        // |point|用一个DWORD值表示坐标. x坐标是低位的short, y坐标是高位的short.
-        // 这样的坐标值一般都是从GetMessagePos/GetCursorPos返回.
+#ifdef _WIN32
         explicit Point(DWORD point);
         explicit Point(const POINT& point);
         Point& operator=(const POINT& point);
+#else
+        explicit Point(uint32_t point);
+#endif
 
         ~Point() {}
 
@@ -68,15 +73,14 @@ namespace gfx
             return !(*this == rhs);
         }
 
-        // 一个点比另外一个点小是比较谁的y值更接近原点. 如果y值相同, 接
-        // 着比较谁的x值接近原点.
-        // 在sets中或者vectors排序时使用Points, 需要<比较.
         bool operator<(const Point& rhs) const
         {
             return (y_==rhs.y_) ? (x_<rhs.x_) : (y_<rhs.y_);
         }
 
+#ifdef _WIN32
         POINT ToPOINT() const;
+#endif
 
     private:
         int x_;

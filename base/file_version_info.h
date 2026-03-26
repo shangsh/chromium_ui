@@ -2,7 +2,9 @@
 #ifndef __file_version_info_h__
 #define __file_version_info_h__
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include <string>
 

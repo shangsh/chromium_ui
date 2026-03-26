@@ -5,6 +5,7 @@
 #pragma once
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "logging.h"
 
 namespace base

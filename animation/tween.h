@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base/basic_types.h"
+#include "base/win_types.h"
 
 namespace gfx
 {

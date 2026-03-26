@@ -33,6 +33,8 @@ public:
 
 protected:
     virtual ~PlatformBitmap() {}
+public:
+    friend class base::RefCounted<PlatformBitmap>;
 };
 
 } // namespace gfx

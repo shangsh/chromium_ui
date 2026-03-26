@@ -27,9 +27,9 @@ namespace mac {
 class ViewMac {
 public:
     ViewMac();
-    ~ViewMac();
+    virtual ~ViewMac();
     
-    void SetBounds(int x, int y, int width, int height);
+    virtual void SetBounds(int x, int y, int width, int height);
     void SetVisible(bool visible);
     void SetEnabled(bool enabled);
     void AddChild(ViewMac* child);

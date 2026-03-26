@@ -4,7 +4,9 @@
 #pragma once
 
 #include "gfx/platform_bitmap.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <gdiplus.h>
 
 namespace gfx

@@ -7,6 +7,7 @@
 #include <map>
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "file_util.h"
 #include "scoped_ptr.h"
 

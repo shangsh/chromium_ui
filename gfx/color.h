@@ -10,7 +10,9 @@ using std::max;
 #include "base/basic_types.h"
 
 #if defined(PLATFORM_WINDOWS)
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <gdiplus.h>
 #elif defined(PLATFORM_MACOS)
 #import <AppKit/AppKit.h>

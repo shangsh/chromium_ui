@@ -5,6 +5,7 @@
 #pragma once
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "string16.h"
 
 // 仅用于各种UTF字符串转换文件.

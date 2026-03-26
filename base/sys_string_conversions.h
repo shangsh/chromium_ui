@@ -7,6 +7,7 @@
 #include <string>
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // 提供平台相关的字符串类型转换, 不使用ICU, 减少最小依赖.
 

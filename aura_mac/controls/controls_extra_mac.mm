@@ -110,17 +110,17 @@ void ListBoxMac::SetBounds(int x, int y, int width, int height) {
 }
 
 // ScrollBar implementation
-ScrollBarMac::ScrollBarMac() : scrollbar_(nil), min_(0), max_(100), value_(0), page_size_(10) {
+ScrollBarMac::ScrollBarMac() : slider_(nil), min_(0), max_(100), value_(0), page_size_(10) {
 }
 
 ScrollBarMac::~ScrollBarMac() {
-    if (scrollbar_) [scrollbar_ release];
+    if (slider_) [slider_ release];
 }
 
 void ScrollBarMac::SetValue(int value) {
     value_ = std::max(min_, std::min(max_, value));
-    if (scrollbar_) {
-        [scrollbar_ setDoubleValue:value_];
+    if (slider_) {
+        [slider_ setDoubleValue:value_];
     }
 }
 
@@ -131,9 +131,9 @@ int ScrollBarMac::GetValue() const {
 void ScrollBarMac::SetRange(int min, int max) {
     min_ = min;
     max_ = max;
-    if (scrollbar_) {
-        [scrollbar_ setMinValue:min];
-        [scrollbar_ setMaxValue:max];
+    if (slider_) {
+        [slider_ setMinValue:min];
+        [slider_ setMaxValue:max];
     }
 }
 
@@ -143,8 +143,8 @@ void ScrollBarMac::SetPageSize(int pageSize) {
 
 void ScrollBarMac::SetBounds(int x, int y, int width, int height) {
     ViewMac::SetBounds(x, y, width, height);
-    if (scrollbar_) {
-        [scrollbar_ setFrame:NSMakeRect(x, y, width, height)];
+    if (slider_) {
+        [slider_ setFrame:NSMakeRect(x, y, width, height)];
     }
 }
 
@@ -223,7 +223,7 @@ void TabControlMac::RemoveTab(int index) {
 void TabControlMac::Clear() {
     tabs_.clear();
     if (tabview_) {
-        [tabview_ removeAllTabViewItems];
+        [tabview_ removeAllItems];
     }
 }
 

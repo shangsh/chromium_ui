@@ -5,6 +5,7 @@
 #pragma once
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // AutoResetValue用于设定变量在特定作用域范围内的值. 举个例子, 如果你的
 // 代码块出口点有"var = false;"或者"var = old_var;", 可以考虑使用这个类.

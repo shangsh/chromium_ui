@@ -1,4 +1,3 @@
-
 #include "animation.h"
 
 #include "base/windows_version.h"
@@ -13,7 +12,6 @@ is_animating_(false), delegate_(NULL) {}
 
 Animation::~Animation()
 {
-    // 在析构函数中不要发出通知. 可能代理拥有这个对象, 且也正被删除.
     if(is_animating_)
     {
         container_->Stop(this);
@@ -48,7 +46,6 @@ void Animation::Stop()
 
     is_animating_ = false;
 
-    // 先通知容器, 因为代理有可能会删除这个对象.
     container_->Stop(this);
 
     AnimationStopped();
@@ -74,7 +71,6 @@ double Animation::CurrentValueBetween(double start, double target) const
 int Animation::CurrentValueBetween(int start, int target) const
 {
     return Tween::ValueBetween(GetCurrentValue(), start, target);
-
 }
 
 gfx::Rect Animation::CurrentValueBetween(const gfx::Rect& start_bounds,
@@ -113,22 +109,19 @@ void Animation::SetContainer(AnimationContainer* container)
 // static
 bool Animation::ShouldRenderRichAnimation()
 {
+#ifndef _WIN32
+    return false;
+#else
     if(base::GetWinVersion() >= base::WINVERSION_VISTA)
     {
         BOOL result;
-        // 获取"关闭所有不必要的动画"值.
-#ifndef SPI_GETCLIENTAREAANIMATION
-#define SPI_GETCLIENTAREAANIMATION 0x1042
-#endif
-        if(SystemParametersInfo(SPI_GETCLIENTAREAANIMATION, 0, &result, 0))
+        if(SystemParametersInfoA(SPI_GETCLIENTAREAANIMATION, 0, &result, 0))
         {
-            // 貌似MSDN文档(2009五月)有一个错误:
-            //   http://msdn.microsoft.com/en-us/library/ms724947(VS.85).aspx
-            // 文档中说当动画禁止时返回TRUE, 但实际上是启用时返回TRUE.
             return !!result;
         }
     }
-    return !::GetSystemMetrics(SM_REMOTESESSION);
+    return !::GetSystemMetrics(0);
+#endif
 }
 
 void Animation::SetStartTime(base::TimeTicks start_time)

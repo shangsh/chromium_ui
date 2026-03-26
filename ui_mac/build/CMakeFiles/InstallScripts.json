@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/ssh/chromium_ui/ui_mac/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

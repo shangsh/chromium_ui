@@ -78,12 +78,12 @@ public:
     void SetRange(int min, int max);
     void SetPageSize(int pageSize);
     
-    NSScrollBar* GetNSScrollBar() const { return scrollbar_; }
+    NSSlider* GetNSSlider() const { return slider_; }
     
     virtual void SetBounds(int x, int y, int width, int height) override;
     
 private:
-    NSScrollBar* scrollbar_;
+    NSSlider* slider_;
     int min_;
     int max_;
     int value_;

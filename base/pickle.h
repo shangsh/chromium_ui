@@ -7,6 +7,7 @@
 #include <string>
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "logging.h"
 #include "string16.h"
 

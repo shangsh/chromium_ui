@@ -1,8 +1,6 @@
-
 #include "rect.h"
 
-#include <windows.h>
-
+#include <algorithm>
 #include <ostream>
 
 #include "insets.h"
@@ -15,12 +13,12 @@ namespace
         if(*origin < dst_origin)
         {
             *origin = dst_origin;
-            *size = __min(dst_size, *size);
+            *size = std::min(dst_size, *size);
         }
         else
         {
-            *size = __min(dst_size, *size);
-            *origin = __min(dst_origin+dst_size, *origin+*size) - *size;
+            *size = std::min(dst_size, *size);
+            *origin = std::min(dst_origin+dst_size, *origin+*size) - *size;
         }
     }
 
@@ -43,20 +41,6 @@ namespace gfx
     Rect::Rect(const gfx::Point& origin, const gfx::Size& size)
         : origin_(origin), size_(size) {}
 
-    Rect::Rect(const RECT& r) : origin_(r.left, r.top)
-    {
-        set_width(r.right-r.left);
-        set_height(r.bottom-r.top);
-    }
-
-    Rect& Rect::operator=(const RECT& r)
-    {
-        origin_.SetPoint(r.left, r.top);
-        set_width(r.right - r.left);
-        set_height(r.bottom - r.top);
-        return *this;
-    }
-
     void Rect::SetRect(int x, int y, int width, int height)
     {
         origin_.SetPoint(x, y);
@@ -72,8 +56,8 @@ namespace gfx
     void Rect::Inset(int left, int top, int right, int bottom)
     {
         Offset(left, top);
-        set_width(__max(width()-left-right, 0));
-        set_height(__max(height()-top-bottom, 0));
+        set_width(std::max(width()-left-right, 0));
+        set_height(std::max(height()-top-bottom, 0));
     }
 
     void Rect::Offset(int horizontal, int vertical)
@@ -105,16 +89,6 @@ namespace gfx
         }
     }
 
-    RECT Rect::ToRECT() const
-    {
-        RECT r;
-        r.left = x();
-        r.right = right();
-        r.top = y();
-        r.bottom = bottom();
-        return r;
-    }
-
     bool Rect::Contains(int point_x, int point_y) const
     {
         return (point_x>=x()) && (point_x<right()) &&
@@ -135,14 +109,14 @@ namespace gfx
 
     Rect Rect::Intersect(const Rect& rect) const
     {
-        int rx = __max(x(), rect.x());
-        int ry = __max(y(), rect.y());
-        int rr = __min(right(), rect.right());
-        int rb = __min(bottom(), rect.bottom());
+        int rx = std::max(x(), rect.x());
+        int ry = std::max(y(), rect.y());
+        int rr = std::min(right(), rect.right());
+        int rb = std::min(bottom(), rect.bottom());
 
         if(rx>=rr || ry>=rb)
         {
-            rx = ry = rr = rb = 0; // 不相交.
+            rx = ry = rr = rb = 0;
         }
 
         return Rect(rx, ry, rr-rx, rb-ry);
@@ -150,7 +124,6 @@ namespace gfx
 
     Rect Rect::Union(const Rect& rect) const
     {
-        // 空矩形特殊处理.
         if(IsEmpty())
         {
             return rect;
@@ -160,17 +133,16 @@ namespace gfx
             return *this;
         }
 
-        int rx = __min(x(), rect.x());
-        int ry = __min(y(), rect.y());
-        int rr = __max(right(), rect.right());
-        int rb = __max(bottom(), rect.bottom());
+        int rx = std::min(x(), rect.x());
+        int ry = std::min(y(), rect.y());
+        int rr = std::max(right(), rect.right());
+        int rb = std::max(bottom(), rect.bottom());
 
         return Rect(rx, ry, rr-rx, rb-ry);
     }
 
     Rect Rect::Subtract(const Rect& rect) const
     {
-        // 边界情况:
         if(!Intersects(rect))
         {
             return *this;
@@ -187,7 +159,6 @@ namespace gfx
 
         if(rect.y()<=y() && rect.bottom()>=bottom())
         {
-            // y方向完全相交.
             if(rect.x() <= x())
             {
                 rx = rect.right();
@@ -199,7 +170,6 @@ namespace gfx
         }
         else if(rect.x()<=x() && rect.right()>=right())
         {
-            // x方向完全相交.
             if(rect.y() <= y())
             {
                 ry = rect.bottom();

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "string_piece.h"
 
 namespace base

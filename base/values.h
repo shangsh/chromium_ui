@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "string16.h"
 
 // 定义递归的数据存储类Value, 用于存储设置以及其它持续化数据. 可以包含(递归的)

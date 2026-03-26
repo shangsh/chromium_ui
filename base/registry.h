@@ -4,11 +4,14 @@
 
 #pragma once
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include <string>
 
 #include "basic_types.h"
+#include "win_types.h"
 
 namespace base
 {

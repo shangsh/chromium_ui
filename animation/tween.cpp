@@ -69,7 +69,7 @@ int Tween::ValueBetween(double value, int start, int target)
     {
         delta++;
     }
-    return start + static_cast<int>(value * _nextafter(delta, 0));
+    return start + static_cast<int>(value * nextafter(delta, 0));
 }
 
 // static

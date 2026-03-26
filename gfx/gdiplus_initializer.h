@@ -8,8 +8,12 @@
 using std::min;
 using std::max;
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
+#ifdef _WIN32
 #include <gdiplus.h>
+#endif
 
 #include "base/basic_types.h"
 #include "base/non_thread_safe.h"

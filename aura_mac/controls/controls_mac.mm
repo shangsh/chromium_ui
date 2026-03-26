@@ -115,7 +115,7 @@ void TextFieldMac::SetPlaceholder(const std::wstring& text) {
 void TextFieldMac::SetPasswordMode(bool password) {
     password_ = password;
     if (textfield_) {
-        [textfield_ setSecureTextEntry:password];
+        [[textfield_ cell] setSecureTextEntry:password];
     }
 }
 

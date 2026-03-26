@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // 能为STL容器提供栈缓冲区分配内存的分配器, 溢出时在堆上分配. 栈缓冲区分
 // 配内存可以在一定程度上避免堆分配.

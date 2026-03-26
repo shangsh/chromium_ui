@@ -7,6 +7,7 @@
 #include <stack>
 
 #include "basic_types.h"
+#include "win_types.h"
 #include "lock.h"
 
 namespace base

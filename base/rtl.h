@@ -2,7 +2,9 @@
 #ifndef __rtl_h__
 #define __rtl_h__
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include "string16.h"
 

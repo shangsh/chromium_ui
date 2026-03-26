@@ -5,6 +5,7 @@
 #pragma once
 
 #include "basic_types.h"
+#include "win_types.h"
 
 // 警告: 线程局部存储用好不是那么容易, 请确保这就是你想要的最好方案. 不要
 // 过早的优化, 比如用一个Lock即可达到目的.

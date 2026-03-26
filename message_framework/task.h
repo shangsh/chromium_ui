@@ -223,7 +223,7 @@ struct RunnableMethodTraits
     RunnableMethodTraits()
     {
 #ifndef NDEBUG
-        origin_thread_id_ = GetCurrentThreadId();
+        origin_thread_id_ = pthread_self();
 #endif
     }
 
@@ -232,7 +232,7 @@ struct RunnableMethodTraits
 #ifndef NDEBUG
         // If destroyed on a separate thread, then we had better have been using
         // thread-safe reference counting!
-        if(origin_thread_id_ != GetCurrentThreadId())
+        if(origin_thread_id_ != (size_t)pthread_self())
         {
             DCHECK(T::ImplementsThreadSafeReferenceCounting());
         }
