@@ -7,7 +7,7 @@
 #include "color.h"
 #include <string>
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 namespace Gdiplus
 {
     class Bitmap;
@@ -26,14 +26,14 @@ public:
     Bitmap(const Bitmap& other);
     Bitmap& operator=(const Bitmap& other);
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     explicit Bitmap(Gdiplus::Bitmap* native_bitmap);
 #endif
 
     explicit Bitmap(PlatformBitmap* platform_bitmap);
     ~Bitmap();
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     Gdiplus::Bitmap* GetNativeBitmap() const;
 #endif
 

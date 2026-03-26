@@ -28,7 +28,7 @@ namespace gfx
         Font(const Font& other);
         Font& operator=(const Font& other);
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
         explicit Font(HFONT native_font);
 #endif
 
@@ -49,11 +49,11 @@ namespace gfx
         const std::wstring& GetFontName() const;
         int GetFontSize() const;
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
         HFONT GetNativeFont() const;
 #endif
 
-#if defined(PLATFORM_MACOS)
+#if PLATFORM_MACOS && defined(__OBJC__)
         void* GetCTFont() const;
         void* GetNSFont() const;
 #endif

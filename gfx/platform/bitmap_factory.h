@@ -5,9 +5,9 @@
 
 #include "gfx/bitmap.h"
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 #include "gfx/platform/bitmap_win.h"
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
 #include "gfx/platform/bitmap_mac.h"
 #endif
 
@@ -16,9 +16,9 @@ namespace gfx
 
 // Platform-specific Bitmap creation
 Bitmap* Bitmap::CreateBitmap() {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     return new BitmapWin();
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     return new BitmapMac();
 #else
     return new Bitmap();
@@ -26,9 +26,9 @@ Bitmap* Bitmap::CreateBitmap() {
 }
 
 Bitmap* Bitmap::CreateBitmap(int width, int height, bool is_opaque) {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     return new BitmapWin(width, height, is_opaque);
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     return new BitmapMac(width, height, is_opaque);
 #else
     return new Bitmap();

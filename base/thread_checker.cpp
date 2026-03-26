@@ -1,7 +1,8 @@
-
 #include "thread_checker.h"
 
 #ifndef NDEBUG
+
+#ifdef _WIN32
 
 ThreadChecker::ThreadChecker()
 {
@@ -29,5 +30,38 @@ void ThreadChecker::EnsureThreadIdAssigned() const
     }
     valid_thread_id_.reset(new DWORD(GetCurrentThreadId()));
 }
+
+#else // !_WIN32
+
+#include <pthread.h>
+
+ThreadChecker::ThreadChecker()
+{
+    EnsureThreadIdAssigned();
+}
+
+ThreadChecker::~ThreadChecker() {}
+
+bool ThreadChecker::CalledOnValidThread() const
+{
+    EnsureThreadIdAssigned();
+    return *valid_thread_id_ == pthread_self();
+}
+
+void ThreadChecker::DetachFromThread()
+{
+    valid_thread_id_.reset();
+}
+
+void ThreadChecker::EnsureThreadIdAssigned() const
+{
+    if(valid_thread_id_.get())
+    {
+        return;
+    }
+    valid_thread_id_.reset(new uintptr_t(pthread_self()));
+}
+
+#endif // _WIN32
 
 #endif //NDEBUG

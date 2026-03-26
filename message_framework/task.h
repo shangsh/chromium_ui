@@ -258,7 +258,7 @@ struct RunnableMethodTraits
 
 private:
 #ifndef NDEBUG
-    DWORD origin_thread_id_;
+    uintptr_t origin_thread_id_;
 #endif
 };
 

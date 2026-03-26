@@ -16,7 +16,7 @@ public:
     static PlatformBitmap* CreateDefault();
     static PlatformBitmap* CreateFromSize(int width, int height, bool is_opaque);
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     static PlatformBitmap* CreateFromNativeBitmap(Gdiplus::Bitmap* bitmap);
 #endif
 
@@ -27,7 +27,7 @@ public:
     virtual bool LoadFromFile(const std::wstring& file_path) = 0;
     virtual bool SaveToFile(const std::wstring& file_path) const = 0;
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     virtual Gdiplus::Bitmap* GetNativeBitmap() = 0;
 #endif
 

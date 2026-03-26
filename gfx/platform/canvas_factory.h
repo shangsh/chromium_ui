@@ -5,9 +5,9 @@
 
 #include "gfx/canvas.h"
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 #include "gfx/platform/canvas_win.h"
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
 #include "gfx/platform/canvas_mac.h"
 #elif defined(PLATFORM_LINUX)
 #include "gfx/platform/canvas_linux.h"
@@ -18,9 +18,9 @@ namespace gfx
 
 // Factory function to create platform-specific canvas
 Canvas *Canvas::CreateCanvas() {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     return new CanvasWin();
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     return new CanvasMac();
 #else
     return nullptr;
@@ -28,9 +28,9 @@ Canvas *Canvas::CreateCanvas() {
 }
 
 Canvas *Canvas::CreateCanvas(int width, int height, bool is_opaque) {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     return new CanvasWin(width, height, is_opaque);
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     return new CanvasMac(width, height, is_opaque);
 #else
     return nullptr;
@@ -38,9 +38,9 @@ Canvas *Canvas::CreateCanvas(int width, int height, bool is_opaque) {
 }
 
 CanvasPaint *CanvasPaint::CreateCanvasPaint(void* view) {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     return new CanvasPaintWin((HWND)view);
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     return new CanvasPaintMac(view);
 #else
     return nullptr;

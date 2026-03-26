@@ -3,13 +3,13 @@
 
 #pragma once
 
+// basic_types.h first - sets up platform macros and types needed by all code
+#include "basic_types.h"
+
 #ifdef _WIN32
 #include <windows.h>
-#include "basic_types.h"
 #else
-#include <atomic>
 #include <cstdint>
-#include "basic_types.h"
 #endif
 
 namespace base
@@ -38,7 +38,8 @@ namespace base
         return __sync_val_compare_and_swap(ptr, old_value, new_value);
     }
 
-    inline Atomic32 NoBarrier_AtomicExchange(volatile Atomic32* ptr, Atomic32 new_value)
+    inline Atomic32 NoBarrier_AtomicExchange(volatile Atomic32* ptr,
+        Atomic32 new_value)
     {
         Atomic32 old = *ptr;
         while (!__sync_bool_compare_and_swap(ptr, old, new_value)) {

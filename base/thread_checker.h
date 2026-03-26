@@ -45,7 +45,11 @@ private:
     void EnsureThreadIdAssigned() const;
 
     // 因为CalledOnValidThread会设置该值, 所以使用mutable.
+#ifdef _WIN32
     mutable scoped_ptr<DWORD> valid_thread_id_;
+#else
+    mutable scoped_ptr<uintptr_t> valid_thread_id_;
+#endif
 };
 #else
 // release模式下什么都不做.

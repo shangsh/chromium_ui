@@ -5,7 +5,9 @@
 
 #include "gfx/platform_font.h"
 #include <CoreText/CoreText.h>
-#include <AppKit/AppKit.h>
+#ifdef __OBJC__
+#import <AppKit/AppKit.h>
+#endif
 
 namespace gfx
 {
@@ -27,8 +29,10 @@ public:
     int GetStyle() const override { return style_; }
     Font DeriveFont(int size_delta, int style) const override;
 
+#if PLATFORM_MACOS && defined(__OBJC__)
     void* GetCTFont() const override { return ct_font_; }
     void* GetNSFont() const override { return ns_font_; }
+#endif
 
     void SetFont(const std::wstring& font_name, int size);
 
@@ -40,7 +44,11 @@ private:
     int font_size_;
     int style_;
     CTFontRef ct_font_;
+#ifdef __OBJC__
     NSFont* ns_font_;
+#else
+    void* ns_font_;
+#endif
 };
 
 } // namespace gfx

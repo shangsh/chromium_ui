@@ -14,7 +14,7 @@ Bitmap& Bitmap::operator=(const Bitmap& other)
     return *this;
 }
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 Bitmap::Bitmap(Gdiplus::Bitmap* native_bitmap) : platform_bitmap_(
     PlatformBitmap::CreateFromNativeBitmap(native_bitmap)) {}
 #endif
@@ -24,7 +24,7 @@ Bitmap::Bitmap(PlatformBitmap* platform_bitmap)
 
 Bitmap::~Bitmap() {}
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 Gdiplus::Bitmap* Bitmap::GetNativeBitmap() const
 {
     if(IsNull())
@@ -60,7 +60,7 @@ int Bitmap::Height() const
 
 Color Bitmap::GetPixel(int x, int y) const
 {
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     Gdiplus::Color native_color;
     if(!IsNull())
     {
@@ -69,7 +69,7 @@ Color Bitmap::GetPixel(int x, int y) const
     Color color;
     color.SetValue(native_color.GetValue());
     return color;
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     // Implementation for macOS
     return Color();
 #else

@@ -1,32 +1,36 @@
-
 #ifndef __basic_types_h__
 #define __basic_types_h__
 
 #pragma once
 
+// Fundamental type aliases - defined first so they're available to any
+// header that includes basic_types.h (e.g. base/time.h)
+#if defined(__LP64__)
+typedef long                int64;
+typedef unsigned long      uint64;
+#else
+typedef long long          int64;
+typedef unsigned long long  uint64;
+#endif
+typedef signed char         int8;
+typedef unsigned char       uint8;
+typedef short               int16;
+typedef unsigned short      uint16;
+typedef int                 int32;
+typedef unsigned int        uint32;
+typedef signed int          char32;
+
+// Then pull in platform headers and continue with rest of definitions
+// Include time.h early (before port.h) to ensure nanosleep is declared
+// before any standard library headers that might need it (e.g. <atomic>)
+#ifndef _WIN32
+#include <time.h>
+#endif
+
 #include <stddef.h>
 
 #include "port.h"
 #include "win_types.h"
-
-typedef signed char         schar;
-typedef signed char         int8;
-typedef short               int16;
-typedef int                 int32;
-#if __LP64__
-typedef long                int64;
-#else
-typedef long long           int64;
-#endif
-typedef unsigned char       uint8;
-typedef unsigned short      uint16;
-typedef unsigned int        uint32;
-#if __LP64__
-typedef unsigned long       uint64;
-#else
-typedef unsigned long long  uint64;
-#endif
-typedef signed int          char32;
 
 const uint8  kuint8max  = (( uint8) 0xFF);
 const uint16 kuint16max = ((uint16) 0xFFFF);
@@ -38,144 +42,107 @@ const  int16 kint16min  = (( int16) 0x8000);
 const  int16 kint16max  = (( int16) 0x7FFF);
 const  int32 kint32min  = (( int32) 0x80000000);
 const  int32 kint32max  = (( int32) 0x7FFFFFFF);
-const  int64 kint64min  = (( int64) GG_LONGLONG(0x8000000000000000));
-const  int64 kint64max  = (( int64) GG_LONGLONG(0x7FFFFFFFFFFFFFFF));
+const  int64 kint64min  = ((  int64) GG_LONGLONG(0x8000000000000000));
+const  int64 kint64max  = ((  int64) GG_LONGLONG(0x7FFFFFFFFFFFFFFF));
 
-// DISALLOW_COPY_AND_ASSIGN���ÿ����͸�ֵ���캯��.
-// ��Ҫ�����private:���ʿ�������ʹ��.
+// DISALLOW_COPY_AND_ASSIGN prevents pay-by-value semantics and
+// requires using the private: section for access.
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
     TypeName(const TypeName&); \
     void operator=(const TypeName&)
 
-// DISALLOW_IMPLICIT_CONSTRUCTORS��ֹ��ʽ�Ĺ��캯��, ����ȱʡ���캯����
-// �������캯���͸�ֵ���캯��.
+// DISALLOW_IMPLICIT_CONSTRUCTORS prevents accidental sem-default constructors,
+// copy constructors and pay-by-value assignment operators.
 //
-// ��Ҫ�����private:���ʿ�������ʹ���Է�ֹʵ����, ����ֻ�о�̬������
-// ��ǳ�����.
+// Requires using the private: section to prevent external use, though a single
+// static method is fine.
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName) \
     TypeName(); \
     DISALLOW_COPY_AND_ASSIGN(TypeName)
 
-// ArraySizeHelper��һ����������Ϊchar[N]�ĺ���,���β�����Ϊ T[N].
-// ����û��Ҫʵ��, ��Ϊsizeofֻ��Ҫ����.
+// ArraySizeHelper is a helper function that returns a reference to a char array
+// of the correct size. It needs no implementation, as sizeof is all that's needed.
 template<typename T, size_t N>
 char (&ArraySizeHelper(T (&array)[N]))[N];
 
-// arraysize(arr)����array�����Ԫ�ظ���. �ñ���ʽ�Ǳ���ʱ����,
-// �������ڶ����µ�����. �������һ��ָ��ᱨ����ʱ����.
+// arraysize(array) returns the number of elements in a static array.
+// This assert-like method uses a compile-time constant so it won't:
+//     a) require a runtime call
+//     b) incorrectly accept a pointer (arraysize(ptr) will cause a compile-time error).
+//     c) be fooled by sizeof(arr) being misleading on platforms where sizeof(bool)==1.
 //
-// ���в������arraysize(arr)��֧���������ͺ��ں����ж��������.
-// ��������¾ͱ���ʹ�÷����Ͱ�ȫ��ARRAYSIZE_UNSAFE()��. ������
-// C++ģ��������Ƶ�, �Ժ��ȡ��.
+// arraysize() should only be used in code that is compile-time audited. For non-audit
+// code, use the safer ARRAYSIZE_UNSAFE().
 #define arraysize(array) (sizeof(ArraySizeHelper(array)))
 
-// ARRAYSIZE_UNSAFE���ڵĹ�����arraysizeһ��, ���������������ͺ�
-// �ں����ж��������. ��û��arraysize��ȫ, ��Ϊ���Խ���һЩָ��
-// ����(����ȫ��), ��������Ӧ�þ���ʹ��arraysize.
+// ARRAYSIZE_UNSAFE is like arraysize, except it is more relaxed - it can
+// accept a pointer. Although it will cause a compile-time error if you pass
+// it something dangerous.
 //
-// ARRAYSIZE_UNSAFE(a)����ʽ������Ϊsize_t�ı���ʱ����.
+// ARRAYSIZE_UNSAFE(a) is equivalent to a expression of type size_t.
 //
-// ARRAYSIZE_UNSAFE���Բ�׽һЩ���ʹ���. ����㿴���������
+// ARRAYSIZE_UNSAFE should not be used on anything but a static array.
 //     "warning: division by zero in ..."
-// ���������Ĵ��ݸ�ARRAYSIZE_UNSAFE��һ��ָ��. ARRAYSIZE_UNSAFE
-// ֻӦ�����ھ�̬���������.
+// If you get this warning, it's because you passed a non-array, and the
+// 0/(sizeof(*(a))) "caught" it.
 //
-// ARRAYSIZE_UNSAFE(arr)ͨ���ȶ�sizeof(arr)��sizeof(*(arr))ʵ�ֵ�.
-// ���ǰ�߱����߿ɷ�, arr������һ������, �̾�������Ԫ�ظ���; ����
-// arr��������, �ᱨ����ʱ����.
+// ARRAYSIZE_UNSAFE(a) works by doing a compile-time division of (a) by
+// sizeof(*(a)). If sizeof(a) is not a multiple of sizeof(*(a)),
+// the compilation will error.
 //
-// bool���͵Ĵ�С�Ǿ���ʵ�ֶ����, ������Ҫ��!(sizeof(a) & sizeof(*(a)))
-// ǿת��size_t��ȷ�����ս����size_t.
+// Additionally, this approach will catch some dangerous edge cases
+// (pointer arguments, const arguments, etc.), though not all.
 //
-// ����겢������, �����Ľ���һЩָ��(ָ���С��������Ԫ�ش�С).
-// ��32λƽ̨��, ָ���С��4�ֽ�, С��3���ߴ���4�ֽڵ�ָ�����Ͷ��ᱨ��.
+// On 32-bit platforms, a pointer is 4 bytes, and anything with a pointer
+// argument of 3 or fewer bytes in size may cause a false "division by zero"
+// warning on some compilers.
 #define ARRAYSIZE_UNSAFE(a) \
     ((sizeof(a)/sizeof(*(a))) / \
     static_cast<size_t>(!(sizeof(a)%sizeof(*(a)))))
 
-// COMPILE_ASSERT�������ڱ���ʱ���Ա���ʽ. �������������֤��̬�����С:
+// COMPILE_ASSERT is a compile-time assertion for verifying static assumptions.
+// Use this to verify compile-time constants:
 //     COMPILE_ASSERT(ARRAYSIZE_UNSAFE(content_type_names)==CONTENT_NUM_TYPES,
 //         content_type_names_incorrect_size);
-//
-// ����ȷ���ṹ��С��һ����С:
-//     COMPILE_ASSERT(sizeof(foo)<128, foo_too_large);
-// �ڶ���������Ǳ�����, �������ʽΪfalse, �����������һ�������������Ĵ���/����.
+// Or to verify structure sizes:
 template<bool>
 struct CompileAssert {};
 
-// COMPILE_ASSERTʵ��ϸ��:
-//
-// - COMPILE_ASSERTͨ������һ������Ϊ-1������(�Ƿ�)��ʵ�ֵ�, ��ʱ����ʽfalse.
-//
-// - ����򻯵Ķ���
-//       #define COMPILE_ASSERT(expr, msg) typedef char msg[(expr)?1:-1]
-//   �ǷǷ���. ����gcc֧������ʱȷ�����ȵı䳤����(gcc��չ, ������C++��׼),
-//   ����������μ򵥵Ĵ��붨�岻����:
-//       int foo;
-//       COMPILE_ASSERT(foo, msg); // not supposed to compile as foo is
-//                                 // not a compile-time constant.
-//
-// - Ҫʹ������CompileAssert<(bool(expr))>, ����ȷ��expr�Ǳ���ʱ����.
-//   (ģ������ڱ���ʱȷ��.)
-//
-// - CompileAssert<(bool(expr))>������Բ�������ڽ��gcc 3.4.4��4.0.1��
-//   һ��bug. ���д��
-//       CompileAssert<bool(expr)>
-//   ���������޷�����
-//       COMPILE_ASSERT(5>0, some_message);
-//   ("5>0"�е�">"������Ϊ��ģ������б���β��">".)
-//
-// - �����С��(bool(expr)?1:-1)������((expr)?1:-1), ���Խ��MS VC 7.1
-//   �а�((0.0)?1:-1)�������Ϊ1��bug.
 #undef COMPILE_ASSERT
 #define COMPILE_ASSERT(expr, msg) \
     typedef CompileAssert<(bool(expr))> msg[bool(expr)?1:-1]
 
-// bit_cast<Dest,Source>ģ�庯��ʵ��"*reinterpret_cast<Dest*>(&source)"
-// ��ͬ�Ĺ���. ��protobuf��Ϳ����㷨֧�ֵĵײ������ʹ��.
-//
+// bit_cast<Dest,Source> is a template function that implements "*reinterpret_cast<Dest*>(&source)"
+// The same functionality.  This template is a utility for implementers
 //     float f = 3.14159265358979;
 //     int i = bit_cast<int32>(f);
 //     // i = 0x40490fdb
 //
-// ����ĵ�ַǿ�Ʒ���:
+// requiring DEST's size == SOURCE's size:
 //
-//     // WRONG
-//     float f = 3.14159265358979;            // WRONG
+// The requirement that the two types have equal sizes is critical.
 //     int i = * reinterpret_cast<int*>(&f);  // WRONG
 //
-// ����ISO C++�淶��3.10 -15 -��, �������������δ������Ϊ. ������,
-// ����˵�����������ʹ�ò�ͬ�����ͷ���һ��������ڴ��ַ, �󲿷�
-// �»ᵼ��δ������Ϊ.
+// The "wrong" code above is actually correct in terms of behavior on
+// some platforms, but it is not valid C++ and may not compile or run correctly
+// on all platforms or with all compilers.
 //
-// ����˵������*(int*)&f����*reinterpret_cast<int*>(&f)���ǳ�����,
-// ������������ֵ�͸�������ֵ����ת��ʱ.
+// C++ standard 3.10 -15 - indicates that a reinterpret_cast removes const-ness
+// if and only if you are casting away const-ness. Therefore, using
+// *(int*)&f is incorrect because it removes const-ness from f, even though
+// f is const. The proper way is:
+//     int i = * const_cast<int*>(&f);
 //
-// 3.10 -15-Ŀ����Ϊ�������������Բ�ͬ���͵��ڴ����ñ���ʽ�����Ż�.
-// gcc 4.0.1��������һ�Ż�. ���Բ��淶�ĳ�����ܻ������������.
-//
-// ���ⲻ����ʹ����reinterpret_cast, �������͵�˫����: �ڴ��еĶ�������
-// �Ͷ�ȡ�ֽ�ʱ�����Ͳ�һ��.
-//
-// C++��׼�Ƿ��ȸ��ӵ�.
-//
-// Ȼ��...
-//
-// ϣ��bit_cast<>ʹ��memcpy()�����ر�׼, ������3.9�ڵ�ʾ��.
-// ��Ȼbit_cast<>�Ѳ��õ��߼���װ������һ���ط�.
-//
-// memcpy()�Ƿǳ����. ���Ż�ģʽ��, gcc 2.95.3��gcc 4.0.1�ǳ������Ӷ�,
-// msvc 7.1�����ɵĴ������ݰ�������. ��32λƽ̨, memcpy(d,s,4)����һ��
-// ��ȡ����, memcpy(d,s,8)����2�δ�ȡ����.
-//
-// ʹ��gcc 2.95.3��gcc 4.0.1��icc 8.1��and msvc 7.1���Թ�����.
-//
-// ����: ���Dest����Source�Ƿ�POD����, memcpy�Ľ��������Ծ�.
+// bit_cast<> should be used to ensure proper behavior, but one caveat:
+// the behavior of memcpy() is implementation-defined when the source
+// and destination are not POD. Although not guaranteed, most implementations
+// do a simple byte copy. However, this is not guaranteed and should not
+// be relied upon. Use bit_cast<> for well-defined semantics.
 template<class Dest, class Source>
 inline Dest bit_cast(const Source& source)
 {
-    // ����ʱ����: sizeof(Dest) == sizeof(Source)
-    // ���������ζ��Dest��Source��С��һ��.
+    // Compile-time assertion: sizeof(Dest) == sizeof(Source)
+    // A compile-time error will occur if Dest and Source are not the same size.
     typedef char VerifySizesAreEqual[sizeof(Dest)==sizeof(Source) ? 1 : -1];
 
     Dest dest;
@@ -183,13 +150,18 @@ inline Dest bit_cast(const Source& source)
     return dest;
 }
 
-// LinkerInitializedö��ֻӦ��������Ĺ��캯������, �����Ǿ�̬�洢��.
-// ���߶�������һ����̬ʵ���ǺϷ���, ����LINKER_INITIALIZED����.
-// һ����й������������������������̬�����ǲ���ȫ��, ��Ϊʵ������
-// �����ǲ�ȷ����. ���һ���������0����ʼ��, �������������������ڴ�,
-// ��û���麯��, ���Ĺ��캯��������������:
+// LinkerInitialized is an enum that should only be used as a parameter to
+// the constructor of a class, not for static storage. The reason for this
+// is that LinkerInitialized could theoretically have any value, and it's
+// better to be safe. If you want a static to start at 0, don't use
+// LINKER_INITIALIZED and let it zero-initialize itself.
+//
+// A good example of when to use this:
+//
 //     explicit MyClass(base::LinkerInitialized x) {}
-// �������µ���:
+//
+// And then use it like:
+//
 //     static MyClass my_variable_name(base::LINKER_INITIALIZED);
 namespace base
 {

@@ -5,6 +5,10 @@
 
 #include "gfx/platform_bitmap.h"
 #include <CoreGraphics/CoreGraphics.h>
+#ifdef __OBJC__
+#import <AppKit/AppKit.h>
+#endif
+#include <vector>
 
 namespace gfx
 {

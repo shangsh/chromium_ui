@@ -6,11 +6,11 @@
 
 #include <string>
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
 #include <CoreGraphics/CoreGraphics.h>
 #endif
 
@@ -25,9 +25,9 @@ namespace gfx
     class Point;
     class Rect;
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     typedef HDC PlatformDC;
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
     typedef CGContextRef PlatformDC;
 #else
     typedef void* PlatformDC;

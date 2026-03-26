@@ -23,6 +23,7 @@ typedef void* HBRUSH;
 typedef void* HFONT;
 typedef void* HPEN;
 typedef void* HBITMAP;
+typedef unsigned int UINT;
 typedef intptr_t WPARAM;
 typedef intptr_t LPARAM;
 typedef intptr_t LRESULT;

@@ -21,6 +21,7 @@ using std::max;
 namespace gfx
 {
 
+#ifdef _WIN32
     class GdiplusInitializer : public NonThreadSafe
     {
     public:
@@ -39,6 +40,17 @@ namespace gfx
 
         ULONG_PTR gdiplus_token_;
     };
+#else
+    // Stub for non-Windows
+    class GdiplusInitializer
+    {
+    public:
+        GdiplusInitializer() {}
+        ~GdiplusInitializer() {}
+        bool Init() { return true; }
+        void UnInit() {}
+    };
+#endif // _WIN32
 
 } //namespace gfx
 

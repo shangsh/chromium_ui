@@ -47,7 +47,6 @@ add_library(chromium_ui STATIC
 
 target_include_directories(chromium_ui PUBLIC
     ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/base
     ${CMAKE_SOURCE_DIR}/gfx
 )
 

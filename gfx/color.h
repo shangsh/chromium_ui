@@ -3,20 +3,23 @@
 
 #pragma once
 
+#include <time.h>
 #include <algorithm>
 using std::min;
 using std::max;
 
 #include "base/basic_types.h"
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
 #ifdef _WIN32
 #include <windows.h>
 #endif
 #include <gdiplus.h>
-#elif defined(PLATFORM_MACOS)
+#elif PLATFORM_MACOS
+#ifdef __OBJC__
 #import <AppKit/AppKit.h>
 #include <CoreGraphics/CoreGraphics.h>
+#endif
 #endif
 
 namespace gfx
@@ -27,7 +30,7 @@ class Color
 public:
     Color() : a_(255), r_(0), g_(0), b_(0) {}
     
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     Color(COLORREF color) { SetFromCOLORREF(color); }
     Color(const Gdiplus::Color& color) {
         a_ = color.GetA();
@@ -53,7 +56,7 @@ public:
         b_ = argb & 0xFF;
     }
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     COLORREF ToCOLORREF() const { return RGB(r_, g_, b_); }
     void SetFromCOLORREF(COLORREF rgb)
     {
@@ -68,7 +71,7 @@ public:
     }
 #endif
 
-#if defined(PLATFORM_MACOS)
+#if PLATFORM_MACOS && defined(__OBJC__)
     CGColorRef CreateCGColor() const {
         CGFloat components[] = { r_ / 255.0, g_ / 255.0, b_ / 255.0, a_ / 255.0 };
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();

@@ -15,7 +15,7 @@ public:
     static PlatformFont* CreateDefault();
     static PlatformFont* CreateFromNameAndSize(const std::wstring& name, int size);
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     static PlatformFont* CreateFromNativeFont(HFONT font);
 #endif
 
@@ -29,11 +29,11 @@ public:
     virtual int GetStyle() const = 0;
     virtual Font DeriveFont(int size_delta, int style) const = 0;
 
-#if defined(PLATFORM_WINDOWS)
+#if PLATFORM_WINDOWS
     virtual HFONT GetNativeFont() const = 0;
 #endif
 
-#if defined(PLATFORM_MACOS)
+#if PLATFORM_MACOS && defined(__OBJC__)
     virtual void* GetCTFont() const = 0;
     virtual void* GetNSFont() const = 0;
 #endif

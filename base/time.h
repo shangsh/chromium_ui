@@ -223,8 +223,10 @@ namespace base
         static Time FromDoubleT(double dt);
         double ToDoubleT() const;
 
+#ifdef _WIN32
         static Time FromFileTime(FILETIME ft);
         FILETIME ToFileTime() const;
+#endif
 
         // ��Сʱ�侫��. windowsƽ̨��Լ����15.6ms. һЩ�ϵĲ���ϵͳ�汾���ܲ�һ��,
         // ������һ�¶Դ�.
@@ -505,8 +507,10 @@ namespace base
         // ΢�������.
         int64 ticks_;
 
+#ifdef _WIN32
         typedef DWORD (*TickFunctionType)(void);
         static TickFunctionType SetMockTickFunction(TickFunctionType ticker);
+#endif
     };
 
     inline TimeTicks TimeDelta::operator+(TimeTicks t) const
