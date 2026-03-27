@@ -1,30 +1,29 @@
 // demo_mac - Aura UI macOS Demo
-// Entry point for the chromium_ui macOS demo application
+// Uses aura_mac framework controls: ButtonMac, LabelMac, TextFieldMac, CheckboxMac
 
 #import <Cocoa/Cocoa.h>
+#include <string>
 #include <iostream>
+#include "aura_mac/controls/controls_mac.h"
+#include "aura_mac/view/view_mac.h"
 
-// Forward declarations from aura_mac
-namespace aura {
-namespace mac {
-    class WidgetMac;
-    class ButtonMac;
-    class LabelMac;
-    class TextFieldMac;
-}}
+using namespace aura::mac;
 
-// Simple AppDelegate to handle the application lifecycle
 @interface DemoAppDelegate : NSObject <NSApplicationDelegate>
 @end
 
 @implementation DemoAppDelegate {
     NSWindow* window_;
-    NSButton* helloButton_;
-    NSTextField* statusLabel_;
+    ButtonMac* helloBtn_;
+    LabelMac* statusLabel_;
+    TextFieldMac* nameField_;
+    int clickCount_;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification {
-    // Create the main window (800x600)
+    clickCount_ = 0;
+    
+    // Create main window
     NSRect frame = NSMakeRect(0, 0, 800, 600);
     window_ = [[NSWindow alloc] initWithContentRect:frame
                                          styleMask:NSWindowStyleMaskTitled |
@@ -33,142 +32,139 @@ namespace mac {
                                                   NSWindowStyleMaskResizable
                                            backing:NSBackingStoreBuffered
                                              defer:NO];
-    [window_ setTitle:@"Chromium UI - macOS Demo 🦞"];
+    [window_ setTitle:@"Aura UI Framework - macOS Demo 🦞"];
     [window_ center];
 
     NSView* contentView = [window_ contentView];
     [contentView setWantsLayer:YES];
     [[contentView layer] setBackgroundColor:[NSColor windowBackgroundColor].CGColor];
 
-    // Title label
-    NSTextField* titleLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(50, 500, 700, 40)];
-    [titleLabel setStringValue:@"Aura UI Framework - macOS Demo"];
-    [titleLabel setFont:[NSFont systemFontOfSize:24 weight:NSFontWeightBold]];
-    [titleLabel setAlignment:NSTextAlignmentCenter];
-    [titleLabel setTextColor:[NSColor labelColor]];
-    [titleLabel setBezeled:NO];
-    [titleLabel setEditable:NO];
-    [titleLabel setDrawsBackground:NO];
-    [contentView addSubview:titleLabel];
+    // ---- Title ----
+    LabelMac* title = new LabelMac();
+    title->Init(50, 510, 700, 40, L"Aura UI Framework - macOS Demo");
+    title->SetFont([NSFont systemFontOfSize:24 weight:NSFontWeightBold]);
+    title->SetTextColor([NSColor labelColor]);
+    title->SetAlignment(NSTextAlignmentCenter);
+    [contentView addSubview:title->GetNSView()];
 
-    // Subtitle label
-    NSTextField* subtitleLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(50, 460, 700, 30)];
-    [subtitleLabel setStringValue:@"Cross-platform UI framework running natively on macOS"];
-    [subtitleLabel setFont:[NSFont systemFontOfSize:14 weight:NSFontWeightRegular]];
-    [subtitleLabel setAlignment:NSTextAlignmentCenter];
-    [subtitleLabel setTextColor:[NSColor secondaryLabelColor]];
-    [subtitleLabel setBezeled:NO];
-    [subtitleLabel setEditable:NO];
-    [subtitleLabel setDrawsBackground:NO];
-    [contentView addSubview:subtitleLabel];
+    // ---- Subtitle ----
+    LabelMac* subtitle = new LabelMac();
+    subtitle->Init(50, 470, 700, 30, L"Cross-platform UI framework running natively on macOS");
+    subtitle->SetFont([NSFont systemFontOfSize:14 weight:NSFontWeightRegular]);
+    subtitle->SetTextColor([NSColor secondaryLabelColor]);
+    subtitle->SetAlignment(NSTextAlignmentCenter);
+    [contentView addSubview:subtitle->GetNSView()];
 
-    // Separator line
-    NSBox* separator = [[NSBox alloc] initWithFrame:NSMakeRect(50, 445, 700, 1)];
+    // ---- Separator ----
+    NSBox* separator = [[NSBox alloc] initWithFrame:NSMakeRect(50, 455, 700, 1)];
     [separator setBoxType:NSBoxSeparator];
     [contentView addSubview:separator];
 
-    // Button 1 - Click me
-    helloButton_ = [[NSButton alloc] initWithFrame:NSMakeRect(100, 350, 200, 44)];
-    [helloButton_ setTitle:@"Click Me! 👋"];
-    [helloButton_ setFont:[NSFont systemFontOfSize:16 weight:NSFontWeightMedium]];
-    [helloButton_ setBezelStyle:NSBezelStyleRounded];
-    [helloButton_ setTarget:self];
-    [helloButton_ setAction:@selector(buttonClicked:)];
-    [contentView addSubview:helloButton_];
+    // ---- Hello Button ----
+    helloBtn_ = new ButtonMac();
+    helloBtn_->Init(100, 370, 200, 44);
+    helloBtn_->SetText(L"Click Me! 👋");
+    helloBtn_->SetOnClick([self]() {
+        clickCount_++;
+        NSString* msg;
+        if (clickCount_ == 1) {
+            msg = @"✅ Button clicked! Aura UI is working! 🎉";
+        } else {
+            msg = [NSString stringWithFormat:@"✅ Clicked %d times! Aura UI works great! 🎉", clickCount_];
+        }
+        NSTextField* statusField = (NSTextField*)statusLabel_->GetNSView();
+        [statusField setStringValue:msg];
+        [statusField setTextColor:[NSColor systemGreenColor]];
+        [statusField setFont:[NSFont systemFontOfSize:14 weight:NSFontWeightMedium]];
+        
+        NSString* btnTitle = [NSString stringWithFormat:@"Clicked! (%d)", clickCount_];
+        std::string s8 = [btnTitle UTF8String];
+        std::wstring s(s8.begin(), s8.end());
+        helloBtn_->SetText(s);
+    });
+    [contentView addSubview:helloBtn_->GetNSView()];
 
-    // Button 2 - Secondary
-    NSButton* secondaryBtn = [[NSButton alloc] initWithFrame:NSMakeRect(320, 350, 200, 44)];
-    [secondaryBtn setTitle:@"Disabled Button"];
-    [secondaryBtn setFont:[NSFont systemFontOfSize:16 weight:NSFontWeightMedium]];
-    [secondaryBtn setBezelStyle:NSBezelStyleRounded];
-    [secondaryBtn setEnabled:NO];
-    [contentView addSubview:secondaryBtn];
+    // ---- Disabled Button ----
+    ButtonMac* disabledBtn = new ButtonMac();
+    disabledBtn->Init(320, 370, 200, 44);
+    disabledBtn->SetText(L"Disabled Button");
+    disabledBtn->SetEnabled(false);
+    [contentView addSubview:disabledBtn->GetNSView()];
 
-    // Button 3 - Checkout the code
-    NSButton* codeBtn = [[NSButton alloc] initWithFrame:NSMakeRect(540, 350, 200, 44)];
-    [codeBtn setTitle:@"View Source Code →"];
-    [codeBtn setFont:[NSFont systemFontOfSize:16 weight:NSFontWeightMedium]];
-    [codeBtn setBezelStyle:NSBezelStyleRounded];
-    [codeBtn setTarget:self];
-    [codeBtn setAction:@selector(openRepo:)];
-    [contentView addSubview:codeBtn];
+    // ---- GitHub Button ----
+    ButtonMac* githubBtn = new ButtonMac();
+    githubBtn->Init(540, 370, 200, 44);
+    githubBtn->SetText(L"View Source →");
+    githubBtn->SetOnClick([]() {
+        [[NSWorkspace sharedWorkspace] openURL:
+            [NSURL URLWithString:@"https://github.com/shangsh/chromium_ui"]];
+    });
+    [contentView addSubview:githubBtn->GetNSView()];
 
-    // Status label
-    statusLabel_ = [[NSTextField alloc] initWithFrame:NSMakeRect(100, 290, 640, 40)];
-    [statusLabel_ setStringValue:@"👆 Click the button to see Aura UI respond!"];
-    [statusLabel_ setFont:[NSFont systemFontOfSize:14 weight:NSFontWeightRegular]];
-    [statusLabel_ setAlignment:NSTextAlignmentCenter];
-    [statusLabel_ setTextColor:[NSColor systemBlueColor]];
-    [statusLabel_ setBezeled:NO];
-    [statusLabel_ setEditable:NO];
-    [statusLabel_ setDrawsBackground:NO];
-    [contentView addSubview:statusLabel_];
+    // ---- Status Label ----
+    statusLabel_ = new LabelMac();
+    statusLabel_->Init(100, 310, 640, 35, L"👆 Click the button to see Aura UI respond!");
+    statusLabel_->SetFont([NSFont systemFontOfSize:14 weight:NSFontWeightRegular]);
+    statusLabel_->SetTextColor([NSColor systemBlueColor]);
+    statusLabel_->SetAlignment(NSTextAlignmentCenter);
+    [contentView addSubview:statusLabel_->GetNSView()];
 
-    // Info box - Platform info
-    NSBox* infoBox = [[NSBox alloc] initWithFrame:NSMakeRect(50, 130, 700, 140)];
-    [infoBox setTitle:@"Framework Info"];
-    [infoBox setTitleFont:[NSFont systemFontOfSize:13 weight:NSFontWeightSemibold]];
+    // ---- Framework Info ----
+    LabelMac* infoTitle = new LabelMac();
+    infoTitle->Init(50, 250, 700, 25, L"Framework Components (all running on macOS):");
+    infoTitle->SetFont([NSFont systemFontOfSize:13 weight:NSFontWeightSemibold]);
+    infoTitle->SetTextColor([NSColor labelColor]);
+    [contentView addSubview:infoTitle->GetNSView()];
 
-    NSTextField* info1 = [[NSTextField alloc] initWithFrame:NSMakeRect(20, 80, 660, 20)];
-    [info1 setStringValue:@"✅ aura::Widget — NSWindow-based cross-platform window abstraction"];
-    [info1 setFont:[NSFont monospacedSystemFontOfSize:12 weight:NSFontWeightRegular]];
-    [info1 setTextColor:[NSColor secondaryLabelColor]];
-    [info1 setBezeled:NO];
-    [info1 setEditable:NO];
-    [info1 setDrawsBackground:NO];
-    [infoBox addSubview:info1];
+    const wchar_t* lines[] = {
+        L"✅  aura::WidgetMac     — NSWindow abstraction, Init/Show/Close",
+        L"✅  aura::ButtonMac     — NSButton wrapper, SetText/SetOnClick",
+        L"✅  aura::LabelMac      — NSTextField wrapper, SetFont/SetTextColor",
+        L"✅  aura::TextFieldMac  — NSTextField wrapper, SetPlaceholder/SetOnChange",
+        L"✅  aura::CheckboxMac   — NSButton(switch) wrapper, SetChecked",
+        L"✅  gfx::Canvas         — CoreGraphics rendering path",
+    };
+    for (int i = 0; i < 6; i++) {
+        LabelMac* line = new LabelMac();
+        line->Init(70, 215 - i * 24, 660, 20, lines[i]);
+        line->SetFont([NSFont monospacedSystemFontOfSize:12 weight:NSFontWeightRegular]);
+        line->SetTextColor([NSColor secondaryLabelColor]);
+        [contentView addSubview:line->GetNSView()];
+    }
 
-    NSTextField* info2 = [[NSTextField alloc] initWithFrame:NSMakeRect(20, 55, 660, 20)];
-    [info2 setStringValue:@"✅ aura::Button/Label/TextField — Cocoa control wrappers with #ifdef AURA_MAC"];
-    [info2 setFont:[NSFont monospacedSystemFontOfSize:12 weight:NSFontWeightRegular]];
-    [info2 setTextColor:[NSColor secondaryLabelColor]];
-    [info2 setBezeled:NO];
-    [info2 setEditable:NO];
-    [info2 setDrawsBackground:NO];
-    [infoBox addSubview:info2];
+    // ---- TextField Demo ----
+    LabelMac* nameLabel = new LabelMac();
+    nameLabel->Init(50, 70, 80, 24, L"Name:");
+    nameLabel->SetFont([NSFont systemFontOfSize:13 weight:NSFontWeightMedium]);
+    nameLabel->SetTextColor([NSColor labelColor]);
+    [contentView addSubview:nameLabel->GetNSView()];
 
-    NSTextField* info3 = [[NSTextField alloc] initWithFrame:NSMakeRect(20, 30, 660, 20)];
-    [info3 setStringValue:@"✅ gfx::Canvas — CoreGraphics rendering path on macOS"];
-    [info3 setFont:[NSFont monospacedSystemFontOfSize:12 weight:NSFontWeightRegular]];
-    [info3 setTextColor:[NSColor secondaryLabelColor]];
-    [info3 setBezeled:NO];
-    [info3 setEditable:NO];
-    [info3 setDrawsBackground:NO];
-    [infoBox addSubview:info3];
+    nameField_ = new TextFieldMac();
+    nameField_->Init(135, 68, 320, 26);
+    nameField_->SetPlaceholder(L"Type something...");
+    nameField_->SetOnChange([self]() {
+        std::wstring t = nameField_->GetText();
+        std::wcout << L"[Aura UI] TextField changed: " << t << std::endl;
+    });
+    [contentView addSubview:nameField_->GetNSView()];
 
-    [contentView addSubview:infoBox];
+    // ---- Checkbox Demo ----
+    CheckboxMac* agreeCheck = new CheckboxMac();
+    agreeCheck->Init(470, 64, 280, 26);
+    agreeCheck->SetText(L"I agree to use Aura UI");
+    [contentView addSubview:agreeCheck->GetNSView()];
 
-    // Status bar
-    NSTextField* footer = [[NSTextField alloc] initWithFrame:NSMakeRect(50, 95, 700, 20)];
-    [footer setStringValue:@"chromium_ui macOS Port | github.com/shangsh/chromium_ui"];
-    [footer setFont:[NSFont systemFontOfSize:11 weight:NSFontWeightRegular]];
-    [footer setAlignment:NSTextAlignmentCenter];
-    [footer setTextColor:[NSColor tertiaryLabelColor]];
-    [footer setBezeled:NO];
-    [footer setEditable:NO];
-    [footer setDrawsBackground:NO];
-    [contentView addSubview:footer];
+    // ---- Footer ----
+    LabelMac* footer = new LabelMac();
+    footer->Init(50, 25, 700, 20,
+        L"chromium_ui macOS Port  |  github.com/shangsh/chromium_ui");
+    footer->SetFont([NSFont systemFontOfSize:11 weight:NSFontWeightRegular]);
+    footer->SetTextColor([NSColor tertiaryLabelColor]);
+    footer->SetAlignment(NSTextAlignmentCenter);
+    [contentView addSubview:footer->GetNSView()];
 
     [window_ makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (void)buttonClicked:(id)sender {
-    static int count = 0;
-    count++;
-    if (count == 1) {
-        [statusLabel_ setStringValue:[NSString stringWithFormat:@"✅ Button clicked %d time! Aura UI is working perfectly! 🎉", count]];
-        [statusLabel_ setTextColor:[NSColor systemGreenColor]];
-        [helloButton_ setTitle:[NSString stringWithFormat:@"Clicked! (%d)", count]];
-    } else {
-        [statusLabel_ setStringValue:[NSString stringWithFormat:@"✅ Button clicked %d times! Aura UI is working perfectly! 🎉", count]];
-        [statusLabel_ setTextColor:[NSColor systemGreenColor]];
-        [helloButton_ setTitle:[NSString stringWithFormat:@"Clicked! (%d)", count]];
-    }
-}
-
-- (void)openRepo:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/shangsh/chromium_ui"]];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)sender {

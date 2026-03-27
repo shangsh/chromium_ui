@@ -9,38 +9,70 @@
 #import <Cocoa/Cocoa.h>
 
 #include <string>
-#include "view/view_mac.h"
+#include <functional>
+#include "../view/view_mac.h"
+
+// Forward declare ObjC classes at global scope (ObjC++ requirement)
+@class AuraButtonTarget;
+@class AuraTextFieldTarget;
 
 namespace aura {
 namespace mac {
 
-// Button control
-class ButtonMac : public ViewMac {
+// ============================================================================
+// ControlMac - base class for all aura controls
+// ============================================================================
+
+class ControlMac {
+public:
+    virtual ~ControlMac() {}
+    virtual void SetBounds(int x, int y, int width, int height) = 0;
+    virtual void SetVisible(bool visible);
+    virtual void SetEnabled(bool enabled);
+    NSView* GetNSView() const { return nsview_; }
+protected:
+    NSView* nsview_ = nil;
+};
+
+// ============================================================================
+// ButtonMac
+// ============================================================================
+
+class ButtonMac : public ControlMac {
 public:
     ButtonMac();
     virtual ~ButtonMac();
     
+    void Init(int x, int y, int width, int height);
+    
     void SetText(const std::wstring& text);
     std::wstring GetText() const { return text_; }
     
-    void SetListener(void (*onClick)()) { onClick_ = onClick; }
+    void SetOnClick(std::function<void()> fn);
     
     NSButton* GetNSButton() const { return button_; }
     
     virtual void SetBounds(int x, int y, int width, int height) override;
     
 private:
-    NSButton* button_;
+    NSButton* button_ = nil;
     std::wstring text_;
-    void (*onClick_)();
+    std::function<void()> onClick_;
+    id target_ = nil;  // ObjC object (AuraButtonTarget/AuraTextFieldTarget)
 };
 
-// Label control
-class LabelMac : public ViewMac {
+// ============================================================================
+// LabelMac
+// ============================================================================
+
+class LabelMac : public ControlMac {
 public:
     LabelMac();
     LabelMac(const std::wstring& text);
     virtual ~LabelMac();
+    
+    void Init(int x, int y, int width, int height);
+    void Init(int x, int y, int width, int height, const std::wstring& text);
     
     void SetText(const std::wstring& text);
     std::wstring GetText() const { return text_; }
@@ -49,20 +81,23 @@ public:
     void SetTextColor(NSColor* color);
     void SetAlignment(NSTextAlignment align);
     
-    NSTextField* GetNSLabel() const { return label_; }
-    
     virtual void SetBounds(int x, int y, int width, int height) override;
     
 private:
-    NSTextField* label_;
+    NSTextField* label_ = nil;
     std::wstring text_;
 };
 
-// TextField control
-class TextFieldMac : public ViewMac {
+// ============================================================================
+// TextFieldMac
+// ============================================================================
+
+class TextFieldMac : public ControlMac {
 public:
     TextFieldMac();
     virtual ~TextFieldMac();
+    
+    void Init(int x, int y, int width, int height);
     
     void SetText(const std::wstring& text);
     std::wstring GetText() const;
@@ -75,23 +110,31 @@ public:
     void SetReadOnly(bool read_only);
     bool IsReadOnly() const { return read_only_; }
     
-    NSTextField* GetNSTextField() const { return textfield_; }
+    void SetOnChange(std::function<void()> fn);
     
     virtual void SetBounds(int x, int y, int width, int height) override;
     
 private:
-    NSTextField* textfield_;
+    NSTextField* textfield_ = nil;
     std::wstring placeholder_;
-    bool password_;
-    bool read_only_;
+    bool password_ = false;
+    bool read_only_ = false;
+    std::function<void()> onChange_;
+    id target_ = nil;  // ObjC object (AuraTextFieldTarget)
 };
 
-// Checkbox control
-class CheckboxMac : public ViewMac {
+// ============================================================================
+// CheckboxMac
+// ============================================================================
+
+class CheckboxMac : public ControlMac {
 public:
     CheckboxMac();
     CheckboxMac(const std::wstring& text);
     virtual ~CheckboxMac();
+    
+    void Init(int x, int y, int width, int height);
+    void Init(int x, int y, int width, int height, const std::wstring& text);
     
     void SetText(const std::wstring& text);
     std::wstring GetText() const { return text_; }
@@ -99,12 +142,10 @@ public:
     void SetChecked(bool checked);
     bool IsChecked() const;
     
-    NSButton* GetNSCheckbox() const { return checkbox_; }
-    
     virtual void SetBounds(int x, int y, int width, int height) override;
     
 private:
-    NSButton* checkbox_;
+    NSButton* checkbox_ = nil;
     std::wstring text_;
 };
 
