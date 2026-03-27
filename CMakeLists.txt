@@ -65,4 +65,7 @@ if(APPLE)
     # Add macOS-specific Aura UI implementation
     # This only compiles when AURA_MAC is defined
     add_subdirectory(aura_mac)
+
+    # Add macOS GUI demo
+    add_subdirectory(demo_mac)
 endif()

@@ -54,6 +54,7 @@ WidgetMac::~WidgetMac() {
 }
 
 bool WidgetMac::Init() {
+    bounds_ = gfx::Rect(0, 0, 800, 600);
     window_ = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 800, 600)
                                          styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable |
                                                   NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable

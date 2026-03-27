@@ -115,7 +115,16 @@ void TextFieldMac::SetPlaceholder(const std::wstring& text) {
 void TextFieldMac::SetPasswordMode(bool password) {
     password_ = password;
     if (textfield_) {
-        [[textfield_ cell] setSecureTextEntry:password];
+        // NSTextField doesn't support setSecureTextEntry directly
+        // Recreate as NSSecureTextField when entering password mode
+        if (password) {
+            NSRect frame = [textfield_ frame];
+            NSSecureTextField* secure = [[NSSecureTextField alloc] initWithFrame:frame];
+            [secure setFont:[textfield_ font]];
+            [secure setPlaceholderString:[textfield_ placeholderString]];
+            [textfield_ release];
+            textfield_ = secure;
+        }
     }
 }
 

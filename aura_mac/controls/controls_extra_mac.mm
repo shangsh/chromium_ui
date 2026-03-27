@@ -223,7 +223,10 @@ void TabControlMac::RemoveTab(int index) {
 void TabControlMac::Clear() {
     tabs_.clear();
     if (tabview_) {
-        [tabview_ removeAllItems];
+        // NSTabView has no removeAllItems; remove each tab individually
+        while ([[tabview_ tabViewItems] count] > 0) {
+            [tabview_ removeTabViewItem:[[tabview_ tabViewItems] objectAtIndex:0]];
+        }
     }
 }
 
