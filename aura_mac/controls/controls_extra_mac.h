@@ -10,36 +10,15 @@
 
 #include <string>
 #include <vector>
-#include "controls/controls_mac.h"
+#include "../view/view_mac.h"
 
 namespace aura {
 namespace mac {
 
-// ComboBox - Dropdown
-class ComboBoxMac : public ViewMac {
-public:
-    ComboBoxMac();
-    virtual ~ComboBoxMac();
-    
-    void AddItem(const std::wstring& item);
-    void RemoveItem(int index);
-    void Clear();
-    
-    void SetSelectedIndex(int index);
-    int GetSelectedIndex() const;
-    std::wstring GetSelectedItem() const;
-    
-    NSPopUpButton* GetNSComboBox() const { return combobox_; }
-    
-    virtual void SetBounds(int x, int y, int width, int height) override;
-    
-private:
-    NSPopUpButton* combobox_;
-    std::vector<std::wstring> items_;
-    int selected_index_;
-};
+// ============================================================================
+// ListBoxMac - simple single-column list
+// ============================================================================
 
-// ListBox
 class ListBoxMac : public ViewMac {
 public:
     ListBoxMac();
@@ -66,14 +45,17 @@ private:
     int selected_index_;
 };
 
-// ScrollBar
+// ============================================================================
+// ScrollBarMac - standalone scroll bar
+// ============================================================================
+
 class ScrollBarMac : public ViewMac {
 public:
     ScrollBarMac();
     virtual ~ScrollBarMac();
     
     void SetValue(int value);
-    int GetValue() const;
+    int GetValue() const { return value_; }
     
     void SetRange(int min, int max);
     void SetPageSize(int pageSize);
@@ -90,33 +72,10 @@ private:
     int page_size_;
 };
 
-// ProgressBar
-class ProgressBarMac : public ViewMac {
-public:
-    ProgressBarMac();
-    virtual ~ProgressBarMac();
-    
-    void SetValue(int value);
-    int GetValue() const;
-    
-    void SetRange(int min, int max);
-    
-    void SetIndeterminate(bool indeterminate);
-    bool IsIndeterminate() const { return indeterminate_; }
-    
-    NSProgressIndicator* GetNSProgressBar() const { return progress_; }
-    
-    virtual void SetBounds(int x, int y, int width, int height) override;
-    
-private:
-    NSProgressIndicator* progress_;
-    int min_;
-    int max_;
-    int value_;
-    bool indeterminate_;
-};
+// ============================================================================
+// TabControlMac - tab view
+// ============================================================================
 
-// TabControl
 class TabControlMac : public ViewMac {
 public:
     TabControlMac();
@@ -127,7 +86,7 @@ public:
     void Clear();
     
     void SetSelectedTab(int index);
-    int GetSelectedTab() const;
+    int GetSelectedTab() const { return selected_; }
     
     NSTabView* GetNSTabControl() const { return tabview_; }
     
@@ -135,29 +94,6 @@ private:
     NSTabView* tabview_;
     std::vector<std::wstring> tabs_;
     int selected_;
-};
-
-// Slider
-class SliderMac : public ViewMac {
-public:
-    SliderMac();
-    virtual ~SliderMac();
-    
-    void SetValue(int value);
-    int GetValue() const;
-    
-    void SetRange(int min, int max);
-    void SetTickCount(int count);
-    
-    NSSlider* GetNSSlider() const { return slider_; }
-    
-    virtual void SetBounds(int x, int y, int width, int height) override;
-    
-private:
-    NSSlider* slider_;
-    int min_;
-    int max_;
-    int value_;
 };
 
 } // namespace mac
